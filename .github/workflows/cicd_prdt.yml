@@ -9,11 +9,11 @@ name: cicd_prdt
 on: [workflow_dispatch]
 
 env:
-  PROJECT_NAME: adam
+  PROJECT_NAME: ava
   AWS_REGION: ap-northeast-2
   S3_BUCKET: ramses-cicd
-  CODE_DEPLOY_APPLICATION_NAME: ramses-ucarlike
-  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: ramses-ucarlike-prdt
+  CODE_DEPLOY_APPLICATION_NAME: ramses-costco
+  CODE_DEPLOY_DEPLOYMENT_GROUP_NAME: ramses-costco-prdt
 
 permissions:
   contents: read
