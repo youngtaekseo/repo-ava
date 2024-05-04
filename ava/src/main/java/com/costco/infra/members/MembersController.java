@@ -31,7 +31,6 @@ public class MembersController extends BaseController {
 			// 비밀번호 비교
 			if(matchesBcrypt(loginPassword, dto.getMbrPassWord(), 10)) {
 				returnMap.put("rt", "success");
-				System.out.println("matchesBcrypt");
 				httpSession.setMaxInactiveInterval(60 * Constants.SESSION_MINUTE_SDM); // 60second * 30 = 30minute
 				httpSession.setAttribute("sessMbrSeq",   dto.getMbrSeq());
 				httpSession.setAttribute("sessMbrEmail", dto.getMbrEmail());
