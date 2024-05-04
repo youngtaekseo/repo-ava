@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # stop.sh
 
-PROJECT="adam-0.0.1"
-PROJECT_FULL_PATH_01="/home/ec2-user/service/ucarlike-prdt-01"
+PROJECT="ava-0.0.1"
+PROJECT_FULL_PATH_01="/home/ec2-user/service/costco-prdt-01"
 JAR_FILE="$PROJECT_FULL_PATH_01/$PROJECT.jar"
 LOG_PATH="$PROJECT_FULL_PATH_01/logs"
 
