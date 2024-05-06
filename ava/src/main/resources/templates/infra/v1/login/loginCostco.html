@@ -7,7 +7,7 @@
 		<div class="flex items-center min-h-screen p-6 bg-gray-50 dark:bg-gray-900">
 			<div class="flex-1 h-full max-w-4xl mx-auto overflow-hidden bg-white rounded-lg shadow-xl dark:bg-gray-800">
 				<div class="flex flex-col overflow-y-auto md:flex-row">
-					<div class="h-32 md:h-auto md:w-1" style="width: 80%;">
+					<div class="h-32 md:h-auto md:w-1" style="width: 70%;">
 						<img class="object-cover w-full h-full dark:hidden" aria-hidden="true"
 							src="img/cartoon.jpg" alt="Office"/>
 						<img class="hidden object-cover w-full h-full dark:block" aria-hidden="true"
@@ -25,7 +25,7 @@
 									<label class="block text-sm">
 										<span class="text-gray-700 dark:text-gray-400">아이디(이메일)</span>
 										<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-											id="mbrEmail" name="mbrEmail" value="a@a.com" type="text"
+											id="mbrEmail" name="mbrEmail" th:value="${myEmail}" type="text"
 											onkeyup="fnOnKeyUp(this)" onchange="fnOnKeyUp(this)">
 										<span id="mbrEmailValid" name="mbrEmailValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 											아이디(이메일)
