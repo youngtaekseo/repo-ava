@@ -23,7 +23,21 @@ public class MyOrderController {
 	
 	String str = "/infra/v1/myorder";
 	
-//	발주 리스트 페이지
+	// 검색조건 초기화
+	@RequestMapping(value = "/myorderListInit")
+	public String myorderListInit(@ModelAttribute("vo") MyOrderVo vo, Model model) throws Exception {
+		vo.setShDateEnd(null);
+		vo.setShDateStart(null);
+		vo.setShDelNy(0);
+		vo.setShOption(null);
+		vo.setShOptionDate(0);
+		vo.setShValue(null);
+		vo.setShReceive(null);
+		
+		return "redirect:/myorderList";
+	}
+	
+	//	발주 리스트 페이지
 	@RequestMapping(value = "/myorderList")
 	public String myorderList(@ModelAttribute("vo") MyOrderVo vo, Model model)throws Exception
 	{
@@ -116,9 +130,21 @@ public class MyOrderController {
 		return "redirect:myorderList";
 	}
 	
+	// 검색조건 초기화
+	@RequestMapping(value = "/myorderDetailListInit")
+	public String myorderDetailListInit(@ModelAttribute("vo") MyOrderVo vo, Model model) throws Exception {
+		vo.setShDateEnd(null);
+		vo.setShDateStart(null);
+		vo.setShDelNy(0);
+		vo.setShOption(null);
+		vo.setShOptionDate(0);
+		vo.setShValue(null);
+		vo.setShReceive(null);
+		
+		return "redirect:/myorderDetailList";
+	}
 	
-	
-//	발주 디테일 리스트 페이지
+	//	발주 디테일 리스트 페이지
 	@RequestMapping(value = "/myorderDetailList")
 	public String myOrderDetailSdmList(@ModelAttribute("vo") MyOrderVo vo, Model model ) throws Exception
 	{

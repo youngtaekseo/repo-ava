@@ -14,7 +14,21 @@ public class OrdersController {
 	@Autowired
 	OrdersService service;
 	
-// 주문 리스트
+	// 검색조건 초기화
+	@RequestMapping(value = "/orderListInit")
+	public String orderListInit(@ModelAttribute("vo") OrdersVo vo, Model model) throws Exception {
+		vo.setShDateEnd(null);
+		vo.setShDateStart(null);
+		vo.setShDelNy(0);
+		vo.setShOption(null);
+		vo.setShOptionDate(0);
+		vo.setShValue(null);
+		vo.setShReleasedNy(null);
+		
+		return "redirect:/orderList";
+	}
+	
+	// 주문 리스트
 	@RequestMapping(value = "/orderList")
 	public String ordersList(@ModelAttribute("vo") OrdersVo vo, OrdersDto dto, Model model)throws Exception {
 		
@@ -47,6 +61,20 @@ public class OrdersController {
 		};
 		
 		return Constants.PATH_ORDERS + "orderListAjax";
+	}
+	
+	// 검색조건 초기화
+	@RequestMapping(value = "/orderDetailListInit")
+	public String orderDetailListInit(@ModelAttribute("vo") OrdersVo vo, Model model) throws Exception {
+		vo.setShDateEnd(null);
+		vo.setShDateStart(null);
+		vo.setShDelNy(0);
+		vo.setShOption(null);
+		vo.setShOptionDate(0);
+		vo.setShValue(null);
+		vo.setShReleasedNy(null);
+		
+		return "redirect:/orderDetailList";
 	}
 	
 // 상세주문리스트
@@ -141,7 +169,6 @@ public class OrdersController {
 //	상세주문수정
 	@RequestMapping(value = "/updateOrt")
 	public String updateOrt(OrdersDto dto, OrdersDto isDto) throws Exception {
-		System.out.println(dto.getOrdSeq() + "----------------------------------------");
 		service.updateOrt(dto);
 		
 		// 출고상태 변경
