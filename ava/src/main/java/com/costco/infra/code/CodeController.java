@@ -24,10 +24,9 @@ public class CodeController {
 	CodeService service;
 	
 	@Autowired
-	CodeGroupService codeGroupService;
+	CodeGroupService codeGroupService;	
 	
-	
-//	전체리스트 @RequestParam(value = "page", defaultValue = "1") final int page) throws Exception {
+	//	전체리스트 @RequestParam(value = "page", defaultValue = "1") final int page) throws Exception {
 	@RequestMapping(value = "/codeSdmList")
 	public String codeListSdm(@ModelAttribute("vo") CodeVo vo, Model model) throws Exception {
 			 
