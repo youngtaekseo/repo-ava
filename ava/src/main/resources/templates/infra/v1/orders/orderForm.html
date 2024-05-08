@@ -94,8 +94,8 @@
 		let goUrlSdmCreate 	= "/codeGroupSdmCreate";	/* 등록화면 */
 		let goUrlSdmInsert 	= "/ortInsert";				/* 등록 */
 		let goUrlSdmUpdate 	= "/updateOrt";				/* 수정 */
-		let goUrlSdmDelete 	= "/codeGroupSdmDelete";	/* 삭제 */
-		let goUrlSdmUdtOne 	= "/codeGroupSdmDelNy";		/* 삭제여부변경 */
+		let goUrlSdmDelete 	= "/orderdelete";			/* 삭제 */
+		let goUrlSdmUdtOne 	= "/orderSelNY";			/* 삭제여부변경 */
 
 		// 필수입력체크대상
 		// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)
@@ -127,6 +127,18 @@
     	// 저장버튼
 		document.getElementById("btnSubmit").onclick = function() {
 			fnCallController();
+		};
+		
+		// 삭제
+		fnDataDelete = function() {
+			form.action = goUrlSdmDelete;
+			form.submit(); 
+		}
+		
+		// 삭제여부
+		document.getElementById("btnDelNy").onclick = function() {
+			form.action = goUrlSdmUdtOne;
+			form.submit();
 		};
 		
 		// event onkeydown

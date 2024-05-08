@@ -145,14 +145,15 @@
                           							id="checkboxAll" name="checkboxAll" type="checkbox"
                           							style="height: 15px; width: 15px">
                       						</th>
-                      						<th class="px-1 py-1" style="text-align: left;">주문코드</th>
-                      						<th class="px-4 py-1">주문일자</th>
-                      						<th class="px-4 py-1">담당자</th>
-                      						<th class="px-4 py-1">출고여부</th>
-                      						<th class="px-4 py-1">등록일</th>
-                      						<th class="px-4 py-1">수정일</th>
-                      						<th class="px-4 py-1">삭제여부</th>
-                      						<th class="px-4 py-1">수정</th>
+                      						<th class="px-1 py-1" style="text-align: left;">#</th>
+                      						<th class="px-2 py-1" style="text-align: left;">주문</th>
+                      						<th class="px-2 py-1">주문일자</th>
+                      						<th class="px-2 py-1">담당자</th>
+                      						<th class="px-2 py-1">출고여부</th>
+                      						<th class="px-2 py-1">등록일시</th>
+                      						<th class="px-2 py-1">수정일시</th>
+                      						<th class="px-2 py-1" style="text-align: center;">삭제여부</th>
+                      						<th class="px-2 py-1">작업</th>
                     					</tr>
                   					</thead>
                   
@@ -162,7 +163,7 @@
                   						<input type="hidden" id="shCheckedArray" name="shCheckedArray" value="" />
                   						
                   						<tr th:if="${#lists.isEmpty(list)}">
-					                  		<td colspan="9" class="text-center text-purple-600"> 
+					                  		<td colspan="0" class="text-center text-purple-600"> 
 												There is no data !!!
 					                  		</td>
                   						</tr>
@@ -174,13 +175,16 @@
 					                        		style="height: 15px; width: 15px"
 					                        		th:checked="false" />
 					                    	</td>
-					                    	<td id="ordSeq" name="ordSeq" class="px-1 py-1" th:text="${list.ordSeq}" style="text-align: left;"></td>
 					                    	
-                   							<td class="px-4 py-1" th:text="${#dates.format(list.ordDate, 'yyyy-MM-dd HH:mm:ss')}" ></td>
+					                    	<td id="xRowNum" name="xRowNum" class="px-1 py-1" th:text="${list.xRowNum}" style="text-align: left;"></td>
 					                    	
-											<td id="mbrSeq" name="mbrSeq" class="px-1 py-1" th:text="${@membersService.selectOneMembersName(list.mbrSeq)}" ></td>
+					                    	<td id="ordSeq" name="ordSeq" class="px-2 py-1" th:text="${list.ordSeq}" style="text-align: left;"></td>
+					                    	
+                   							<td class="px-2 py-1" th:text="${#dates.format(list.ordDate, 'yyyy-MM-dd')}" ></td>
+					                    	
+											<td id="mbrSeq" name="mbrSeq" class="px-2 py-1" th:text="${@membersService.selectOneMembersName(list.mbrSeq)}" ></td>
 
-					                    	<td class="px-4 py-1">
+					                    	<td class="px-2 py-1">
 					                        	<th:block th:switch="${list.ordReleasedNy}">
 					                        		<span th:case = "0"
 					                        			class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-600 rounded-full dark:text-white dark:bg-red-700">
@@ -197,11 +201,11 @@
 					                        	</th:block>
 					                        </td>
 					                        
-					                        <td class="px-4 py-1" th:text="${#dates.format(list.ordRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					                        <td class="px-2 py-1" th:text="${#dates.format(list.ordRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
 					                        
-					                        <td class="px-4 py-1" th:text="${#dates.format(list.ordModDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
+					                        <td class="px-2 py-1" th:text="${#dates.format(list.ordModDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
 
-					                        <td class="px-4 py-1">
+					                        <td class="px-2 py-1" style="text-align: center;">
 					                        	<th:block th:switch="${list.ordDelNy}">
 					                        		<span th:case = "0"
 					                        			class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
@@ -214,17 +218,8 @@
 					                        	</th:block>
 					                        </td>
 
-					                    	<td class="px-6 py-1" >
+					                    	<td class="px-2 py-1" >
 			           	    					<div class="flex flex-col overflow-y-auto md:flex-row">
-	                    	    					<button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-2"
-	                            						id="btnUpate" name="btnUpdate">
-														<a th:href=@{/orderForm(ordSeq=${list.ordSeq})}>
-															<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-																<path d="m5.433 13.917 1.262-3.155A4 4 0 0 1 7.58 9.42l6.92-6.918a2.121 2.121 0 0 1 3 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 0 1-.65-.65Z"></path>
-																<path d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0 0 10 3H4.75A2.75 2.75 0 0 0 2 5.75v9.5A2.75 2.75 0 0 0 4.75 18h9.5A2.75 2.75 0 0 0 17 15.25V10a.75.75 0 0 0-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5Z"></path>
-															</svg>															
-														</a>
-	                      							</button>
 	                      							<button 
 								                    	id="btnInsert"
 								                    	name="btnInsert"
@@ -274,9 +269,20 @@
                 				</span>
                               
                 				<span class="flex col-span-3 sm:mt-auto sm:justify-end">
+								<!-- 추가버튼 -->          
+				                <button 
+			                    	id="btnInsert"
+			                    	name="btnInsert"
+			                    	class="btnSave flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-2" aria-label="Create">
+									<a th:href="@{/orderInsert}">
+										<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+									  	<path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z"></path>
+										</svg>	
+									</a>
+				                </button>
                 				<!-- 뒤로돌아가기 -->
                 				<button
-				                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-2"
+				                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
 				                    aria-label="Search"
 				                    type="button">        
 				                    <a th:href="@{/orderDetailList}">
@@ -284,27 +290,7 @@
 										  <path clip-rule="evenodd" fill-rule="evenodd" d="M7.793 2.232a.75.75 0 0 1-.025 1.06L3.622 7.25h10.003a5.375 5.375 0 0 1 0 10.75H10.75a.75.75 0 0 1 0-1.5h2.875a3.875 3.875 0 0 0 0-7.75H3.622l4.146 3.957a.75.75 0 0 1-1.036 1.085l-5.5-5.25a.75.75 0 0 1 0-1.085l5.5-5.25a.75.75 0 0 1 1.06.025Z"></path>
 										</svg>	
 									</a>
-				                  </button>
-								<!-- 홈버튼 -->                
-				                <button class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Back">
-				                	<a th:href="@{/index}">
-										<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-									  		<path clip-rule="evenodd" fill-rule="evenodd" d="M9.293 2.293a1 1 0 0 1 1.414 0l7 7A1 1 0 0 1 17 11h-1v6a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1v-3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1v-6H3a1 1 0 0 1-.707-1.707l7-7Z"></path>
-										</svg>                
-				                  	</a>	                  
-				                </button>
-								<!-- 추가버튼 -->
-								&nbsp;&nbsp;          
-				                <button 
-			                    	id="btnInsert"
-			                    	name="btnInsert"
-			                    	class="btnSave flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Create">
-									<a th:href="@{/orderInsert}">
-										<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-									  	<path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z"></path>
-										</svg>	
-									</a>
-				                </button>                  
+				                  </button>                  
                 			</span>                
               			</div>
             		</div>
@@ -477,7 +463,7 @@
 					, cache: false
 					, tpye: "post"
 					, data: {"shCheckedArray":$("#shCheckedArray").val()}
-					, url: "/codeGroupSdmListDelete"
+					, url: "/orderListDelete"
 					, success: function(response) {
 						if(response.rt == "success") {
 							// Controller 호출

@@ -47,6 +47,8 @@ public class OrdersDto {
 //	private Integer xorderdetail_3; // 일부출고
 //	미출고, 출고완료, 일부출고
 	
+	private String xRowNum;
+	
 	public String getOrdSeq() {
 		return ordSeq;
 	}
@@ -255,7 +257,12 @@ public class OrdersDto {
 		this.xordortCount = xordortCount;
 	}
 
-	
-	
+	public String getxRowNum() {
+		return xRowNum;
+	}
+
+	public void setxRowNum(String xRowNum) {
+		this.xRowNum = xRowNum;
+	}
 	
 }

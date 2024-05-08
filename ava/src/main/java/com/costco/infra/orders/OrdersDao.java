@@ -33,4 +33,23 @@ public interface OrdersDao {
 	public OrdersDto selectOneOrtReleaseNy(OrdersDto dto);
 //	주문 출고여부 변경
 	public int updateOrdReleasedNy(OrdersDto dto);
+	
+//	주문 삭제
+	public int orderdelete(OrdersDto dto);
+//	주문 다중 삭제
+	public int orderListDelete(OrdersVo vo);
+//	주문 ny 변경
+	public int orderSelNY(OrdersDto dto);
+//	주문 삭제시 자식요소 삭제
+	public int orderdeletechile(OrdersDto dto);
+//	주문 체크된 자식요소 삭제
+	public int orderDetailListDeletechile(OrdersVo vo);	
+	
+	
+//	주문 디테일 삭제
+	public int orderdetaildelete(OrdersDto dto);
+//	주문 디테일 다중 삭제
+	public int orderDetailListDelete(OrdersVo vo);
+//	주문 디테일 ny변경
+	public int orderDetailSelNY(OrdersDto dto);
 }

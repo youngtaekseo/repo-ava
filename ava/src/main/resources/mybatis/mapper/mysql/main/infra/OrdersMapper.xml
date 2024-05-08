@@ -4,6 +4,7 @@
 <mapper namespace="com.costco.infra.orders.OrdersDao">
 
 	<resultMap id="resultMapObj" type="com.costco.infra.orders.OrdersDto"></resultMap>
+	
 	<!-- 상세주문공통 -->
 	<sql id="selectCommonOrt">
     	FROM orderdetail a
@@ -54,26 +55,31 @@
 
 	<!-- 상세주문리스트 -->
 	<select id="selectListOrt" resultMap="resultMapObj">
-		select
-			a.ortSeq
-			,a.ortCount
-			,a.ortAmt
-			,a.ortReleaseDt 
-			,a.ortReleaseNy
-			,a.ortRegDt
-			,a.ortModDt
-			,b.ordSeq
-			,b.ordDate
-			,b.ordDelNy
-			,c.pdtName
-			,c.pdtPrice
-			,d.mbrClientName
-			,d.mbrName
-			,e.mbrClientName as xmbrClientName
-			,e.mbrName as xmbrName
-			<include refid="selectCommonOrt"/>
-			ORDER BY b.ordSeq
-			limit #{pgRowCount} offset #{pgOffset}
+		SELECT *
+		  FROM (SELECT @ROWNUM := @ROWNUM + 1 xRowNum
+					 , a.ortSeq
+					 , a.ortCount
+					 , a.ortAmt
+					 , a.ortReleaseDt 
+					 , a.ortReleaseNy
+					 , a.ortRegDt
+					 , a.ortModDt
+					 , b.ordSeq
+					 , b.ordDate
+					 , b.ordDelNy
+					 , c.pdtName
+					 , c.pdtPrice
+					 , d.mbrClientName
+					 , d.mbrName
+					 , e.mbrClientName as xmbrClientName
+					 , e.mbrName as xmbrName
+					   <include refid="selectCommonOrt"/>
+                   AND (@ROWNUM := 0) = 0 					   
+			     ORDER BY b.ordSeq, a.ortSeq
+			   ) a
+		 ORDER BY a.xRowNum DESC
+	     LIMIT #{pgRowCount}
+    	OFFSET #{pgOffset}
 	</select>
 	
 	<!-- 카운팅 -->
@@ -135,17 +141,22 @@
 	
 	<!-- 주문리스트 -->
 	<select id="selectList" resultMap="resultMapObj">
-		select
-			ordSeq
-			,ordDate
-			,ordDelNy
-			,ordRegDt
-			,ordModDt
-			,ordReleasedNy
-			,mbrSeq
-			<include refid="selectCommon"/>
-			ORDER BY ordSeq
-			limit #{pgRowCount} offset #{pgOffset}
+		SELECT *
+		  FROM (SELECT @ROWNUM := @ROWNUM + 1 xRowNum	
+					 , ordSeq
+					 , ordDate
+					 , ordDelNy
+					 , ordRegDt
+					 , ordModDt
+					 , ordReleasedNy
+					 , mbrSeq
+					   <include refid="selectCommon"/>
+			       AND (@ROWNUM := 0) = 0 
+			     ORDER BY ordSeq
+			   ) a
+		 ORDER BY a.xRowNum DESC
+	     LIMIT #{pgRowCount}
+    	OFFSET #{pgOffset}
 	</select>
 	
 	<select id="selectOneOrd" resultMap="resultMapObj">
@@ -251,18 +262,93 @@
 	<!-- 주문 출고상태 -->
     <select id="selectOneOrtReleaseNy" resultMap="resultMapObj">
     	SELECT (SELECT COUNT(*) FROM orderdetail aa WHERE aa.ordSeq = a.ordSeq AND aa.ortReleaseNy = 1) xorderdetail_0
-    			,(SELECT COUNT(*) FROM orderdetail aa WHERE aa.ordSeq = a.ordSeq) xordortCount
+    		 , (SELECT COUNT(*) FROM orderdetail aa WHERE aa.ordSeq = a.ordSeq) xordortCount
   		  FROM orders a
  		 WHERE 1 = 1
  		   AND a.ordSeq = #{ordSeq}
     </select>
     
-    <!-- 주문 출고상태 변경 -->
-    <update id="updateOrdReleasedNy">
-    	UPDATE orders
-    	   SET ordModDt = now()
-    	     , ordReleasedNy = #{ordReleasedNy}
-    	 WHERE ordSeq = #{ordSeq}
-    </update>
+	<!-- 주문 삭제 -->
+	<delete id= "deletechile">
+	delete 
+		from
+			orderdetail
+		where 
+			ortSeq = #{ortSeq}
+	</delete>
 	
+	<!-- 주문 삭제 자식요소 삭제 -->
+	<delete id= "orderdelete">
+	delete 
+		from
+			orders
+		where 
+			ordSeq = #{ordSeq}
+	</delete>
+	
+	<!-- 주문상세 체크된 리스트 삭제 -->
+	<delete id = "orderListDelete">
+		delete 
+			from
+				orders
+			where 1=1
+			AND ordSeq IN
+			<foreach collection="shCheckedArray" item="list" open="(" close=")" separator=",">
+	    	         #{list}
+	    	</foreach>
+	</delete>
+	
+	<!-- 체크된 리스트 자식요소 삭제 -->
+	<delete id = "orderDetailListDeletechile">
+		delete 
+			from
+				orderdetail
+			where 1=1
+			AND ordSeq IN
+			<foreach collection="shCheckedArray" item="list" open="(" close=")" separator=",">
+	    	         #{list}
+	    	</foreach>
+	</delete>
+	
+	<!-- 주문 ny 변경 -->
+	<update id="orderSelNY">
+	update orders
+		set
+			ordDelNy = 1
+		where
+			ordSeq = #{ordSeq}
+	</update>
+	
+	
+	
+	<!-- 주문 디테일 삭제 -->
+	<delete id= "orderdetaildelete">
+		delete 
+			from
+				orderdetail
+			where
+				ortSeq = #{ortSeq}
+			
+	</delete>
+	<!-- 주문 디테일 다중 삭제 -->
+	<delete id = "orderDetailListDelete">
+		delete 
+			from
+				orderdetail
+			where 1=1
+			AND ortSeq IN
+			<foreach collection="shCheckedArray" item="list" open="(" close=")" separator=",">
+	    	         #{list}
+	    	</foreach>
+	</delete>
+	
+	<!-- 주문 디테일 ny변경  -->
+	<update id="orderDetailSelNY">
+	update orderdetail
+		set
+			ortDelNy = 1
+		where
+			ortSeq = #{ortSeq}
+	</update>
+		
 </mapper>

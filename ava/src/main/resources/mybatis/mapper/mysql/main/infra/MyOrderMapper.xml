@@ -100,8 +100,6 @@
 			morSeq = #{morSeq}
 	</delete>
 	
-	
-	
 	<!-- 체크된 리스트 삭제 -->
 	<delete id = "myorderListDelete">
 		delete 
@@ -125,6 +123,7 @@
 	    	         #{list}
 	    	</foreach>
 	</delete>
+	
 	<!-- 발주 ny 변경 -->
 	<update id="myorderSelNY">
 	update myorder
@@ -133,9 +132,6 @@
 		where
 			morSeq = #{morSeq}
 	</update>
-	
-	
-	
 	
 	<!-- 발주 디테일 리스트 -->
 	<select id="myorderdetailList" resultMap="resultMapObj">

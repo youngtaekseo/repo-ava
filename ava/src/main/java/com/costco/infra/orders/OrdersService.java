@@ -73,6 +73,46 @@ public class OrdersService {
 	}
 	
 
+//	주문 삭제 
+	public int orderdelete(OrdersDto dto)
+	{
+		return dao.orderdelete(dto);
+	}	
+//	주문 다중 삭제
+	public int orderListDelete(OrdersVo vo)
+	{
+		return dao.orderListDelete(vo);
+	}
+//	주문 ny변경
+	public int orderSelNY(OrdersDto dto)
+	{
+		return dao.orderSelNY(dto);
+	}
+//	주문 삭제시 자식 요소 삭제
+	public int orderdeletechile(OrdersDto dto)
+	{
+		return dao.orderdeletechile(dto);
+	}
+//	주문 체크된 자식요소 삭제
+	public int orderDetailListDeletechile(OrdersVo vo)
+	{
+		return dao.orderDetailListDeletechile(vo);
+	}
 
 	
+//	주문 디테일 삭제
+	public int orderdetaildelete(OrdersDto dto)
+	{
+		return dao.orderdetaildelete(dto);
+	}
+//	주문 디테일 다중 삭제 
+	public int orderDetailListDelete(OrdersVo vo)
+	{
+		return dao.orderDetailListDelete(vo);
+	}
+//	주문 디테일 ny변경 
+	public int orderDetailSelNY(OrdersDto dto)
+	{
+		return dao.orderDetailSelNY(dto);
+	}	
 }

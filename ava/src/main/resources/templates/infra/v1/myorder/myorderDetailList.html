@@ -282,6 +282,17 @@
                 				</span>
                               
                 				<span class="flex col-span-3 sm:mt-auto sm:justify-end">
+								<a th:href="@{/myorderList}">        
+				                  <!-- 추가버튼 -->  
+				                  <button 
+			                    	id="btnInsert"
+			                    	name="btnInsert"
+			                    	class="btnSave flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3" aria-label="Create">
+										<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+									  	<path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z"></path>
+										</svg>	
+				                  </button> 
+				                </a>
 								<!-- 홈버튼 --> 
 								<a th:href="@{/index}">               
 					                <button class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Back">
@@ -292,19 +303,6 @@
 					                  		                  
 					                </button>
 				                </a>
-								<!-- 추가버튼 -->        
-								&nbsp;&nbsp;  
-								<a th:href="@{/myorderList}">        
-				                  <button 
-			                    	id="btnInsert"
-			                    	name="btnInsert"
-			                    	class="btnSave flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Create">
-									
-										<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-									  	<path d="M8.75 3.75a.75.75 0 0 0-1.5 0v3.5h-3.5a.75.75 0 0 0 0 1.5h3.5v3.5a.75.75 0 0 0 1.5 0v-3.5h3.5a.75.75 0 0 0 0-1.5h-3.5v-3.5Z"></path>
-										</svg>	
-				                  </button> 
-				                </a>                 
                 			</span>                
               			</div>
             		</div>

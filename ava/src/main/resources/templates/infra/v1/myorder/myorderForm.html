@@ -160,11 +160,14 @@
 		document.getElementById("btnSubmit").onclick = function() {
 			fnCallController();
 		};
+		
 		// 삭제
 		fnDataDelete = function() {
 			form.action = goUrlSdmDelete;
 			form.submit(); 
 		}
+		
+		// 삭제여부
 		document.getElementById("btnDelNy").onclick = function() {
 			form.action = goUrlSdmUdtOne;
 			form.submit();

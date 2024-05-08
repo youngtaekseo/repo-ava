@@ -56,7 +56,7 @@
                       
                       <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                            id="orederDate" name="orederDate" 
-                          th:value="${#dates.format(item.morDate, 'yyyy-MM-dd HH:mm:ss')}"
+                          th:value="${#dates.format(item.morDate, 'yyyy-MM-dd')}"
                           onkeydown="fnOnKeyDown()" onchange="fnOnChange(this)" readonly>                    
                       <span id="orederDateValid" name="orederDateValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
                       	그룹코드명 입력하세요
@@ -269,8 +269,6 @@
 // ============================================================================
 // event
 // ============================================================================
-
-    	// 저장버튼
     	window.addEventListener('load', function() {
 			jQuery.datetimepicker.setLocale('ko'); // 한국어
 	
@@ -279,6 +277,8 @@
 				format: 'Y-m-d', //'Y-m-d' //H:i
 			});
 		});
+		
+		// 저장버튼
 		document.getElementById("btnSubmit").onclick = function() {
 			fnCallController();
 			/* form.action =goUrlSdmUpdate;
@@ -333,12 +333,16 @@
 			let validChk = false;		
 			return validChk;
 		};
+		
+		// 삭제
 		fnDataDelete = function() {
 			form.action = goUrlSdmDelete;
 			form.submit(); 
 		}
 		
     </script>
+    
+    
     <script th:inline="javascript">
     	/* document.getElementById("test").onclick = function(){
     		var index =[[${pdtlist}]];

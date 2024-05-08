@@ -1,10 +1,14 @@
 package com.costco.infra.orders;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.costco.common.constants.Constants;
 import com.costco.common.util.UtilFunction;
@@ -171,8 +175,7 @@ public class OrdersController {
 	public String updateOrt(OrdersDto dto, OrdersDto isDto) throws Exception {
 		service.updateOrt(dto);
 		
-		// 출고상태 변경
-		
+		// 출고상태 변경		
 		isDto = service.selectOneOrtReleaseNy(dto);
 		
 		// 주문, 주문상세 출고상태 설정
@@ -192,7 +195,69 @@ public class OrdersController {
 		return "redirect:/orderDetailList";
 	}
 	
+//	주문 삭제 
+	@RequestMapping(value= "/orderdelete")
+	public String orderdelete(OrdersDto dto)throws Exception
+	{
+		//service.myorderdeletechile(dto);
+		service.orderdelete(dto);
+		return "redirect:orderList";
+	}
+//	주문 다중 삭제
+	@ResponseBody
+	@RequestMapping(value = "/orderListDelete")
+	public Map<String, Object> orderListDelete(OrdersDto dto, OrdersVo vo) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		//service.myorderDetailListDeletechile(vo);
+		if(service.orderListDelete(vo)>0)
+		{
+			service.orderdeletechile(dto);
+			returnMap.put("rt", "success");
+		}else {
+			returnMap.put("rt", "fail");
+		}
+
+		return returnMap;
+	}
+//	주문 ny 변경 
+	@RequestMapping(value = "/orderSelNY")
+	public String orderSelNY(OrdersDto dto)throws Exception
+	{
+		service.orderSelNY(dto);
+		return "redirect:orderList";
+	}
+
+
+//	주문 디테일 삭제
+	@RequestMapping(value = "/orderdetaildelete")
+	public String orderdetaildelete(OrdersDto dto) throws Exception
+	{
+		service.orderdetaildelete(dto);
+		return "redirect:/orderDetailList";
+	}
 	
+//	주문 디테일 ny 변경
+	@RequestMapping(value ="orderDetailSelNY")
+	public String orderDetailSelNY(OrdersDto dto) throws Exception
+	{
+		service.orderDetailSelNY(dto);
+		return "redirect:/orderDetailList";
+	}
+	
+//	주문 디테일 다중 삭제
+	@ResponseBody
+	@RequestMapping(value = "/orderDetailListDelete")
+	public Map<String, Object> orderDetailListDelete(OrdersVo vo) throws Exception {
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		
+		if(service.orderDetailListDelete(vo)>0)
+		{
+			returnMap.put("rt", "success");
+		}else {
+			returnMap.put("rt", "fail");
+		}
 
-
+		return returnMap;
+	}	
 }
