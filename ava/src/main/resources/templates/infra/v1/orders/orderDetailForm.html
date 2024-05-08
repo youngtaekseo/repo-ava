@@ -113,7 +113,7 @@
 			        			<span class="text-gray-700 dark:text-gray-400">출고일</span>
 			        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 				                            id="ortDt" name="ortReleaseDt"
-				                            th:value="${#dates.format(item.ortReleaseDt, 'yyyy-MM-dd')}">
+				                            th:value="${#strings.substring(item.ortReleaseDt, 0, 10)}">
 			      			</label>
 			    		</div>
 					</div>
@@ -195,9 +195,10 @@
 		
     	// 저장버튼
 		document.getElementById("btnSubmit").onclick = function() {
-			alert("btnSubmit1");
-			fnCallController();
-			alert("btnSubmit2");
+			//fnCallController();
+			// 저장
+			form.action = goUrlSdmUpdate;
+			form.submit();			
 		};
 		
 		// 삭제버튼
@@ -237,7 +238,6 @@
 		// controller 호출
 		fnCallController = function() {
 			/* if(!fnValidation()) {return false;}; */
-						alert("fnCallController");
 			// 저장
 			form.action = goUrlSdmUpdate;
 			form.submit();

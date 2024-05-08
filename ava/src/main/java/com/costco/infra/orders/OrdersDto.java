@@ -5,27 +5,27 @@ import java.util.Date;
 public class OrdersDto {
 	
 // orders
-	private String ordSeq;			//주문순번
-	private Date ordDate;			//주문일시
+	private String  ordSeq;			//주문순번
+	private Date    ordDate;		//주문일시
 	private Integer ordDelNy;		//삭제여부
-	private Date ordRegDt;			//등록일시
-	private Date ordModDt;			//수정일시
+	private Date    ordRegDt;		//등록일시
+	private Date    ordModDt;		//수정일시
 	private Integer ordReleasedNy;	//출고여부(0:미출고, 1:출고, 2:일부출고)
-	private String mbrSeq;			//회원순번
+	private String  mbrSeq;			//회원순번
 // orders
 	
 // orderdetail
-	private String ortSeq;			
-	private String ortCompCd;		//주문처
-	private String ortCount;		//주문수량
-	private Double ortAmt;			//주문금액
-	private String ortShippingCd;	//배송처
-	private Date ortReleaseDt;		//출고일자
+	private String  ortSeq;			
+	private String  ortCompCd;		//주문처
+	private String  ortCount;		//주문수량
+	private Double  ortAmt;			//주문금액
+	private String  ortShippingCd;	//배송처
+	private String  ortReleaseDt;	//출고일자
 	private Integer ortReleaseNy;	//출고여부(0:미출고, 1:출고)
 	private Integer ortDelNy;		//삭제여부
-	private Date ortRegDt;			//등록일시
-	private Date ortModDt;			//수정일시
-	private String pdtSeq;			//상품순번
+	private Date    ortRegDt;		//등록일시
+	private Date    ortModDt;		//수정일시
+	private String  pdtSeq;			//상품순번
 // orderdetail
 
 // product
@@ -145,11 +145,11 @@ public class OrdersDto {
 		this.ortShippingCd = ortShippingCd;
 	}
 	
-	public Date getOrtReleaseDt() {
+	public String getOrtReleaseDt() {
 		return ortReleaseDt;
 	}
 	
-	public void setOrtReleaseDt(Date ortReleaseDt) {
+	public void setOrtReleaseDt(String ortReleaseDt) {
 		this.ortReleaseDt = ortReleaseDt;
 	}
 	

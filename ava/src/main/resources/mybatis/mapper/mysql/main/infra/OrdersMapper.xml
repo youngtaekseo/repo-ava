@@ -219,7 +219,7 @@
 				,ortCount = #{ortCount}
 				,ortAmt = #{ortAmt}
 				,ortShippingCd = #{ortShippingCd}
-				,ortReleaseDt = #{ortReleaseDt}
+				,ortReleaseDt = STR_TO_DATE(#{ortReleaseDt},'%Y-%m-%d %H%i%s') 
 				,ortReleaseNy = 1
 				,ortDelNy = 0
 				,ortModDt = now()
@@ -268,13 +268,21 @@
  		   AND a.ordSeq = #{ordSeq}
     </select>
     
+    <!-- 주문 출고상태 변경 -->
+    <update id="updateOrdReleasedNy">
+    	UPDATE orders
+    	   SET ordModDt = now()
+    	     , ordReleasedNy = #{ordReleasedNy}
+    	 WHERE ordSeq = #{ordSeq}
+    </update>    
+    
 	<!-- 주문 삭제 -->
-	<delete id= "deletechile">
+	<delete id= "orderdeletechile">
 	delete 
 		from
 			orderdetail
 		where 
-			ortSeq = #{ortSeq}
+			ordSeq = #{ordSeq}
 	</delete>
 	
 	<!-- 주문 삭제 자식요소 삭제 -->
