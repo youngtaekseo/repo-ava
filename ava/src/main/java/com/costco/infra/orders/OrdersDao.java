@@ -52,4 +52,7 @@ public interface OrdersDao {
 	public int orderDetailListDelete(OrdersVo vo);
 //	주문 디테일 ny변경
 	public int orderDetailSelNY(OrdersDto dto);
+	
+	// 주문가능수량확인
+	public OrdersDto selectOneOrderCountCheck(OrdersVo vo);
 }

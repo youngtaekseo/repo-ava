@@ -145,11 +145,15 @@
                           							id="checkboxAll" name="checkboxAll" type="checkbox"
                           							style="height: 15px; width: 15px">
                       						</th>
-                      						<th class="px-1 py-1" style="text-align: left;">#</th>
-                      						<th class="px-2 py-1" style="text-align: left;">주문</th>
+                      						<th class="px-1 py-1" style="text-align: right;">#</th>
+                      						<th class="px-2 py-1" style="text-align: right;">주문</th>
                       						<th class="px-2 py-1">주문일자</th>
-                      						<th class="px-2 py-1">담당자</th>
-                      						<th class="px-2 py-1">출고여부</th>
+                      						<!--<th class="px-2 py-1">담당자</th>-->
+                      						<th class="px-2 py-1" style="text-align: right;">주문수량</th>
+                      						<th class="px-2 py-1" style="text-align: right;">주문금액</th>
+                      						<th class="px-2 py-1" style="text-align: right;">출고수량</th>
+                      						<th class="px-2 py-1" style="text-align: right;">잔여수량</th>
+                      						<th class="px-2 py-1" style="text-align: center;">출고여부</th>
                       						<th class="px-2 py-1">등록일시</th>
                       						<th class="px-2 py-1">수정일시</th>
                       						<th class="px-2 py-1" style="text-align: center;">삭제여부</th>
@@ -163,7 +167,7 @@
                   						<input type="hidden" id="shCheckedArray" name="shCheckedArray" value="" />
                   						
                   						<tr th:if="${#lists.isEmpty(list)}">
-					                  		<td colspan="0" class="text-center text-purple-600"> 
+					                  		<td colspan="14" class="text-center text-purple-600"> 
 												There is no data !!!
 					                  		</td>
                   						</tr>
@@ -175,36 +179,46 @@
 					                        		style="height: 15px; width: 15px"
 					                        		th:checked="false" />
 					                    	</td>
-					                    	
-					                    	<td id="xRowNum" name="xRowNum" class="px-1 py-1" th:text="${list.xRowNum}" style="text-align: left;"></td>
-					                    	
-					                    	<td id="ordSeq" name="ordSeq" class="px-2 py-1" th:text="${list.ordSeq}" style="text-align: left;"></td>
-					                    	
+					                    	<!--row순번-->
+					                    	<td id="xRowNum" name="xRowNum" class="px-1 py-1" th:text="${list.xRowNum}" style="text-align: right;"></td>
+					                    	<!--주문순번-->
+					                    	<td id="ordSeq" name="ordSeq" class="px-2 py-1" th:text="${list.ordSeq}" style="text-align: right;"></td>
+					                    	<!--주문일자-->
                    							<td class="px-2 py-1" th:text="${#dates.format(list.ordDate, 'yyyy-MM-dd')}" ></td>
-					                    	
-											<td id="mbrSeq" name="mbrSeq" class="px-2 py-1" th:text="${@membersService.selectOneMembersName(list.mbrSeq)}" ></td>
-
-					                    	<td class="px-2 py-1">
-					                        	<th:block th:switch="${list.ordReleasedNy}">
-					                        		<span th:case = "0"
-					                        			class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-600 rounded-full dark:text-white dark:bg-red-700">
-					                        			미출고
-					                        		</span>
-					                        		<span th:case = "1"
-					                        			class="px-2 py-1 font-semibold leading-tight text-blue-100 bg-blue-600 rounded-full dark:text-white dark:bg-blue-700">
-					                        			출&emsp;고
-					                        		</span>
-					                        		<span th:case = "2"
-					                        			class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-600 rounded-full dark:text-white dark:bg-red-700">
-					                        			일&emsp;부
-					                        		</span>                          		
-					                        	</th:block>
+					                    	<!--담당자-->
+											<!--<td id="mbrSeq" name="mbrSeq" class="px-2 py-1" th:text="${@membersService.selectOneMembersName(list.mbrSeq)}" ></td>-->
+											<!--주문수량-->
+											<td class="px-2 py-1" th:text="${#numbers.formatInteger(list.xortCount, 1,  'COMMA')}"  style="text-align: right;"></td>
+											<!--주문금액-->
+											<td class="px-2 py-1" th:text="${#numbers.formatInteger(list.xortAmt, 1,  'COMMA')}"  style="text-align: right;"></td>
+											<!--출고수량-->
+											<td class="px-2 py-1" th:text="${#numbers.formatInteger(list.xortCount_1, 1,  'COMMA')}"  style="text-align: right;"></td>
+											<!--잔여수량-->
+											<td class="px-2 py-1" th:text="${#numbers.formatInteger(list.xortCount_0, 1,  'COMMA')}"  style="text-align: right;"></td>
+											<!--출고여부-->
+					                    	<td class="px-2 py-1" style="text-align: center;">
+												<th:block th:if="${list.xortCount != 0}">
+						                        	<th:block th:switch="${list.ordReleasedNy}">
+						                        		<span th:case = "0"
+						                        			class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-600 rounded-full dark:text-white dark:bg-red-700">
+						                        			미출고
+						                        		</span>
+						                        		<span th:case = "1"
+						                        			class="px-2 py-1 font-semibold leading-tight text-blue-100 bg-blue-600 rounded-full dark:text-white dark:bg-blue-700">
+						                        			출&emsp;고
+						                        		</span>
+						                        		<span th:case = "2"
+						                        			class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-600 rounded-full dark:text-white dark:bg-red-700">
+						                        			일&emsp;부
+						                        		</span>                          		
+						                        	</th:block>
+												</th:block>
 					                        </td>
-					                        
+					                        <!--등록일시-->
 					                        <td class="px-2 py-1" th:text="${#dates.format(list.ordRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-					                        
+					                        <!--수정일시-->
 					                        <td class="px-2 py-1" th:text="${#dates.format(list.ordModDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-
+											<!--삭제여부-->
 					                        <td class="px-2 py-1" style="text-align: center;">
 					                        	<th:block th:switch="${list.ordDelNy}">
 					                        		<span th:case = "0"
@@ -217,7 +231,7 @@
 					                        		</span>                        		
 					                        	</th:block>
 					                        </td>
-
+											<!--작업-->
 					                    	<td class="px-2 py-1" >
 			           	    					<div class="flex flex-col overflow-y-auto md:flex-row">
 													<th:block th:if="${list.ordReleasedNy} != 1">

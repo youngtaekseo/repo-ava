@@ -26,6 +26,11 @@ public class OrdersDto {
 	private Date    ortRegDt;		//등록일시
 	private Date    ortModDt;		//수정일시
 	private String  pdtSeq;			//상품순번
+	
+	private Integer xortCount;
+	private Integer xortCount_1;
+	private Integer xortCount_0;
+	private Double  xortAmt;
 // orderdetail
 
 // product
@@ -263,6 +268,38 @@ public class OrdersDto {
 
 	public void setxRowNum(String xRowNum) {
 		this.xRowNum = xRowNum;
+	}
+
+	public Integer getXortCount() {
+		return xortCount;
+	}
+
+	public void setXortCount(Integer xortCount) {
+		this.xortCount = xortCount;
+	}
+
+	public Double getXortAmt() {
+		return xortAmt;
+	}
+
+	public void setXortAmt(Double xortAmt) {
+		this.xortAmt = xortAmt;
+	}
+
+	public Integer getXortCount_1() {
+		return xortCount_1;
+	}
+
+	public void setXortCount_1(Integer xortCount_1) {
+		this.xortCount_1 = xortCount_1;
+	}
+
+	public Integer getXortCount_0() {
+		return xortCount_0;
+	}
+
+	public void setXortCount_0(Integer xortCount_0) {
+		this.xortCount_0 = xortCount_0;
 	}
 	
 }

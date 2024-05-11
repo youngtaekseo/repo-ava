@@ -8,10 +8,14 @@
 	<!-- 상세주문공통 -->
 	<sql id="selectCommonOrt">
     	FROM orderdetail a
-			join orders b on b.ordSeq = a.ordSeq
-			join product c on c.pdtSeq = a.pdtSeq
-			left join members d on d.mbrSeq = a.ortCompCd
-			left join members e on e.mbrSeq = a.ortShippingCd
+			 JOIN orders b
+			   ON b.ordSeq = a.ordSeq
+			 JOIN product c
+			   ON c.pdtSeq = a.pdtSeq
+			 LEFT JOIN members d
+			   ON d.mbrSeq = a.ortCompCd
+			 LEFT JOIN members e
+			   ON e.mbrSeq = a.ortShippingCd
         WHERE 1=1
         <if test="shDelNy != null and !shDelNy.equals('')">AND ortDelNy = #{shDelNy}</if>
         <if test="shReleasedNy != null and !shReleasedNy.equals('')">AND ortReleaseNy = #{shReleasedNy}</if>
@@ -35,19 +39,19 @@
 	</sql>
 	<!-- 주문공통 -->
 	<sql id="selectCommon">
-    	FROM orders
+    	FROM orders a
         WHERE 1=1
-        <if test="shDelNy != null and !shDelNy.equals('')">AND ordDelNy = #{shDelNy}</if>
-        <if test="shReleasedNy != null and !shReleasedNy.equals('')">AND ordReleasedNy = #{shReleasedNy}</if>
+        <if test="shDelNy != null and !shDelNy.equals('')">AND a.ordDelNy = #{shDelNy}</if>
+        <if test="shReleasedNy != null and !shReleasedNy.equals('')">AND a.ordReleasedNy = #{shReleasedNy}</if>
          
         <choose>
-         	<when test="shOptionDate == 1">AND ordRegDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
-        	<when test="shOptionDate == 2">AND ordModDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
-        	<when test="shOptionDate == 3">AND ordDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+         	<when test="shOptionDate == 1">AND a.ordRegDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+        	<when test="shOptionDate == 2">AND a.ordModDt BETWEEN #{shDateStart} AND #{shDateEnd}</when>
+        	<when test="shOptionDate == 3">AND a.ordDate BETWEEN #{shDateStart} AND #{shDateEnd}</when>
         </choose>
          
          <choose>
-         	<when test="shOption == 1">AND ordSeq = #{shValue}</when>
+         	<when test="shOption == 1">AND a.ordSeq = #{shValue}</when>
          </choose>
          
          <!-- <if test="shOptionGroup != null and !shOptionGroup.equals('')">AND a.cdgSeq = #{shOptionGroup}</if> -->
@@ -143,15 +147,33 @@
 	<select id="selectList" resultMap="resultMapObj">
 		SELECT @ROWNUM := @ROWNUM + 1 xRowNum	
 			 , a.*
-		  FROM (SELECT ordSeq
-					 , ordDate
-					 , ordDelNy
-					 , ordRegDt
-					 , ordModDt
-					 , ordReleasedNy
-					 , mbrSeq
+		  FROM (SELECT a.ordSeq
+					 , a.ordDate
+					 , a.ordDelNy
+					 , a.ordRegDt
+					 , a.ordModDt
+					 , a.ordReleasedNy
+					 , a.mbrSeq
+					 , (SELECT IFNULL(SUM(aa.ortCount),0) 
+					      FROM orderdetail aa
+					     WHERE aa.ordSeq = a.ordSeq
+					   ) xortCount
+					 , (SELECT IFNULL(SUM(aa.ortAmt),0) 
+					      FROM orderdetail aa
+					     WHERE aa.ordSeq = a.ordSeq
+					   ) xortAmt
+					 , (SELECT IFNULL(SUM(aa.ortCount),0) 
+					      FROM orderdetail aa
+					     WHERE aa.ordSeq = a.ordSeq
+					       AND aa.ortReleaseNy = 1
+					   ) xortCount_1
+					 , (SELECT IFNULL(SUM(aa.ortCount),0) 
+					      FROM orderdetail aa
+					     WHERE aa.ordSeq = a.ordSeq
+					       AND aa.ortReleaseNy = 0
+					   ) xortCount_0
 					   <include refid="selectCommon"/>
-			     ORDER BY ordSeq
+			     ORDER BY a.ordSeq
 			   ) a
 		 WHERE (@ROWNUM := 0) = 0 
 		 ORDER BY @ROWNUM := @ROWNUM + 1 DESC
@@ -359,4 +381,27 @@
 			ortSeq = #{ortSeq}
 	</update>
 		
+	<select id="selectOneOrderCountCheck" resultMap="resultMapObj">
+		 SELECT ifnull(b.whsCount-a.ortCount, 0) xortCount
+		   FROM (SELECT SUM(a.ortCount) ortCount
+		  		  FROM orderdetail a
+				 WHERE 1 = 1
+				   AND a.ortReleaseNy = 1
+				   AND a.ortDelNy     = 0
+				   AND a.pdtSeq       = #{shValue}
+				) a,    
+		 		(SELECT ifnull(max(a.whsCount),0) whsCount
+				  FROM (SELECT sum(b.whsCount) whsCount
+				  			 , a.pdtSeq
+						  FROM myorderdetail a
+						       LEFT JOIN warehousing b
+						         ON b.motSeq = a.motSeq
+						        AND ifnull(b.whsWarehousingNy,0) <![CDATA[<>]]> 0
+				                AND b.whsDelNy     = 0
+						 GROUP BY a.pdtSeq
+				 	   ) a
+				 WHERE 1 = 1
+				   AND a.pdtSeq = #{shValue}
+				) b
+	</select>
 </mapper>

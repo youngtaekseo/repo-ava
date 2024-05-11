@@ -115,4 +115,9 @@ public class OrdersService {
 	{
 		return dao.orderDetailSelNY(dto);
 	}	
+	
+	// 주문가능수량확인
+	public OrdersDto selectOneOrderCountCheck(OrdersVo vo) {
+		return dao.selectOneOrderCountCheck(vo);
+	}
 }

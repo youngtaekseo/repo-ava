@@ -72,7 +72,7 @@
 			        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 			        			<span class="text-gray-700 dark:text-gray-400">주문수량</span>
 			        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-			            			id="ortCount" name="ortCount" placeholder="주문수량" th:value="${item.ortCount}">
+			            			id="ortCount" name="ortCount" placeholder="주문수량" th:value="${item.ortCount}" readonly>
 			      			</label>
 			    		</div>
 			    		
@@ -269,10 +269,6 @@
 			
 			let count = document.getElementById("ortCount").value;
 			
-			 
-			
-			alert(price);
-			alert(count)
 			let prises = price * count; // 총 합계
 			let hiddenprice = document.getElementById("ortAmt"); // 실제 저장할 값
 			let totalprice = document.getElementById("ortAmts");// 보여주는 값

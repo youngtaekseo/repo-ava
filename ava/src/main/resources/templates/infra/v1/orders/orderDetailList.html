@@ -185,29 +185,29 @@
 					                        		style="height: 15px; width: 15px"
 					                        		th:checked="false" />
 					                    	</td>
-					                    	
+					                    	<!--row순번-->
 					                    	<td id="xRowNum" name="xRowNum" class="px-1 py-1" th:text="${list.xRowNum}" style="text-align: center;"></td>
-					                    	
+					                    	<!--주문순번-->
 					                    	<td id="ordSeq" name="ordSeq" class="px-2 py-1" th:text="${list.ordSeq}" style="text-align: center;"></td>
-
+											<!--주문상세순번-->
 					                    	<td id="ortSeq" name="ortSeq" class="px-2 py-1" th:text="${list.ortSeq}" style="text-align: center;"></td>				                    	
-					                    	
+					                    	<!--주문일자-->
                    							<td class="px-2 py-1" th:text="${#dates.format(list.ordDate, 'yyyy-MM-dd')}"></td>
-					                    	
+					                    	<!--거래서-->
 											<td id="mbrClientName" name="mbrClientName" class="px-2 py-1" th:text="${list.mbrClientName}"></td>
-											
+											<!--거래처담당자-->
 											<!--<td id="mbrName" name="mbrName" class="px-2 py-1" th:text="${list.mbrName}"></td>-->
-											
+											<!--상품명-->
 											<td id="pdtName" name="pdtName" class="px-2 py-1" th:text="${list.pdtName}"></td>
-
+											<!--단가-->
 											<td id="pdtPrice" name="pdtPrice" class="px-2 py-1" th:text="${#numbers.formatInteger(list.pdtPrice,1,'COMMA')}" style="text-align: right;"></td>
-											
+											<!--주문수량-->
 											<td id="ortCount" name="ortCount" class="px-2 py-1" th:text="${list.ortCount}" style="text-align: right;"></td>
-											
+											<!--주문총액-->
 											<td id="ortAmt" name="ortAmt" class="px-2 py-1" th:text="${#numbers.formatInteger(list.ortAmt,1,'COMMA')}" style="text-align: right;"></td>
-					                    	
+					                    	<!--배송처-->
 					                    	<td id="xmbrClientName" name="xmbrClientName" class="px-2 py-1" th:text="${list.xmbrClientName}"></td>
-											
+											<!--출고여부-->
 					                    	<td class="px-2 py-1">
 					                        	<th:block th:switch="${list.ortReleaseNy}">
 					                        		<span th:case = "0"
@@ -220,9 +220,9 @@
 					                        		</span>
 					                        	</th:block>
 					                        </td>
-					                    	
+					                    	<!--출고여부-->
 					                    	<td class="px-2 py-1" th:text="${#strings.substring(list.ortReleaseDt, 0, 10)}"></td>
-											
+											<!--삭제여부-->
 											<td class="px-2 py-1" style="text-align: center;">
 					                        	<th:block th:switch="${list.ordDelNy}">
 					                        		<span th:case = "0"
@@ -235,8 +235,9 @@
 					                        		</span>                        		
 					                        	</th:block>
 					                        </td> 
-					                        											
+					                        <!--작업-->								
 					                    	<td class="px-2 py-1">
+												<!--수정-->
 												<th:block th:if="${list.ortReleaseNy} == 0">
 													<a th:href="@{/orderDetailForm(ortSeq=${list.ortSeq}, ordSeq=${list.ordSeq})}">
 	               	    								<button class="flex items-center justify-between px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-2"
@@ -248,6 +249,7 @@
 	                      								</button>
 													</a>
 												</th:block>
+												<!--수정 잠금-->
 												<th:block th:unless="${list.ortReleaseNy} == 0">
                	    								<button class="flex items-center justify-between px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-2"
                             							id="btnUpate" name="btnUpdate">
