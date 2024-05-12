@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.costco.common.constants.Constants;
+import com.costco.common.util.UtilDateTime;
 import com.costco.common.util.UtilFunction;
 
 @Controller
@@ -124,8 +125,11 @@ public class OrdersController {
 	
 	//	상세주문수정화면
 	@RequestMapping(value = "/orderDetailForm")
-	public String orderDetailForm(OrdersDto dto, Model model) throws Exception {
-		model.addAttribute("item", service.selectOne(dto));
+	public String orderDetailForm(OrdersDto dto, OrdersDto afDto, Model model) throws Exception {
+		afDto = service.selectOne(dto);
+		afDto.setOrtReleaseDt(UtilDateTime.nowString());
+		model.addAttribute("item", afDto);
+		
 		model.addAttribute("list", service.clientNameList(dto));
 		model.addAttribute("pdtlist", service.productList(dto));
 		model.addAttribute("courierList", service.courierServiceList(dto));

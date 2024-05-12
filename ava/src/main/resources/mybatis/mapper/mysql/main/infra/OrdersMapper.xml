@@ -383,7 +383,7 @@
 		
 	<select id="selectOneOrderCountCheck" resultMap="resultMapObj">
 		 SELECT ifnull(b.whsCount-a.ortCount, 0) xortCount
-		   FROM (SELECT SUM(a.ortCount) ortCount
+		   FROM (SELECT ifnull(sum(a.ortCount),0) ortCount
 		  		  FROM orderdetail a
 				 WHERE 1 = 1
 				   AND a.ortReleaseNy = 1
@@ -391,13 +391,12 @@
 				   AND a.pdtSeq       = #{shValue}
 				) a,    
 		 		(SELECT ifnull(max(a.whsCount),0) whsCount
-				  FROM (SELECT sum(b.whsCount) whsCount
+				  FROM (SELECT ifnull(sum(b.whsCount),0) whsCount
 				  			 , a.pdtSeq
 						  FROM myorderdetail a
 						       LEFT JOIN warehousing b
-						         ON b.motSeq = a.motSeq
-						        AND ifnull(b.whsWarehousingNy,0) <![CDATA[<>]]> 0
-				                AND b.whsDelNy     = 0
+						         ON b.motSeq   = a.motSeq
+				                AND b.whsDelNy = 0
 						 GROUP BY a.pdtSeq
 				 	   ) a
 				 WHERE 1 = 1

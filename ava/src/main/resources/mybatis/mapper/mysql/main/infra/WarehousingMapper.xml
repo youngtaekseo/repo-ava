@@ -82,7 +82,12 @@
 				     , a.motAmt xwhsMotAmt
 				     <if test="whsSeq != null and !whsSeq.equals('')">, c.whsSeq</if>
 				     <if test="whsSeq != null and !whsSeq.equals('')">, IFNULL(c.whsCount, 0) whsCount</if>
-				     , IFNULL(a.motCount, 0) - (SELECT IFNULL(SUM(whsCount), 0) FROM warehousing aa WHERE aa.motSeq = a.motSeq) xwhsCountTot           		          
+				     , (IFNULL(a.motCount, 0) - (SELECT ifnull(sum(whsCount), 0) 
+				                                  FROM warehousing aa
+				                                 WHERE aa.motSeq = a.motSeq
+				                                   <if test="whsSeq != null and !whsSeq.equals('')">AND aa.whsSeq <![CDATA[<>]]> #{whsSeq}</if>
+				                                )
+				       ) xwhsCountTot           		          
 				  FROM myorderdetail a
 				       JOIN myorder b
 				         ON b.morSeq = a.morSeq
@@ -111,7 +116,7 @@
 			)
 		VALUES
 			(
-			  now()		
+			  now()
 			, #{xwhsCountTot}
 			, now()
 			, now()
@@ -133,7 +138,6 @@
 	<update id="updateDelNy">
 		UPDATE warehousing
 		   SET whsModDt = now()
-		   
 		   <choose>
 		   		<when test="mbrDelNy == 0">, whsDelNy = 1</when>
 		   		<when test="mbrDelNy == 1">, whsDelNy = 0</when>

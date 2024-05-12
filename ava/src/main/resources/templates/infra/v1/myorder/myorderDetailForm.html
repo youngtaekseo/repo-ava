@@ -25,13 +25,12 @@
               </h2>
   
               <div class="w-full px-4 py-3 mb-8 bg-white rounded-lg shadow-xs dark:bg-gray-800">
-              
               	  <div class="flex flex-col md:flex-row"> 
 	              	  <div class="md:h-auto md:w-1/2 mr-3">
 	                    <input type="text" style="display: none;"/>                  
 	                    <label class="block text-sm">
 	                      <span class="text-gray-700 dark:text-gray-400">발주번호</span>
-	                      <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" 
+	                      <input class="textRight block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input" 
 	                          th:value="${item.motSeq}"
 	                          onchange="fnOnChange(this)" readonly>                    
 	                      <span id="motCountValid" name="motCountValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
@@ -39,25 +38,21 @@
 	                      </span>                    
 	                    </label>
 	                  </div>
-	                  <div class="md:h-auto md:w-1/2 mr-3">
-	                  </div>
-	                  <div class="md:h-auto md:w-1/2 mr-3">
-	                  </div>
-	                  <div class="md:h-auto md:w-1/2">
-	                  </div>
+	                  
+	                  <div class="md:h-auto md:w-1/2 mr-3"></div>
+	                  <div class="md:h-auto md:w-1/2"></div>
               	  </div>
               	  
-              	  
-                <div class="flex flex-col md:flex-row">                  
+				<div class="flex flex-col md:flex-row">                  
                   <div class="md:h-auto md:w-1/2 mr-3">
                     <input type="text" style="display: none;" />                  
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">발주일시</span>
                       
                       <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                           id="orederDate" name="orederDate" 
+                           id="orederDate" name="orederDate" readonly
                           th:value="${#dates.format(item.morDate, 'yyyy-MM-dd')}"
-                          onkeydown="fnOnKeyDown()" onchange="fnOnChange(this)" readonly>                    
+                          onkeydown="fnOnKeyDown()" onchange="fnOnChange(this)">                    
                       <span id="orederDateValid" name="orederDateValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
                       	그룹코드명 입력하세요
                       </span>                    
@@ -68,161 +63,106 @@
                     <input type="text" style="display: none;"/>                  
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">발주사</span>
-                      
-                     <!--  <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                          id="motCompCd" name="motCompCd"
-                          th:value="${@membersService.selectOneMembersClientName(item.motCompCd)}"
-                          onkeydown="fnOnKeyDown()" onchange="fnOnChange(this)">    -->
-                      
                       <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-				      id="motCompCd" 
-				      name="motCompCd" 
-				      >
-				      <option th:if="${!#lists.isEmpty(list)}"
-					  th:each="list : ${list}" th:value="${list.mbrSeq}" th:text= "${list.mbrClientName}" th:selected="${item.motCompCd} == ${list.mbrSeq}"></option>
+				      	id="motCompCd"name="motCompCd">
+				      	<option th:if="${!#lists.isEmpty(list)}"
+					  		th:each="list : ${list}" th:value="${list.mbrSeq}" th:text= "${list.mbrClientName}" th:selected="${item.motCompCd} == ${list.mbrSeq}"></option>
 				      </select>   
-				                      
                       <span id="motCompCdValid" name="motCompCdValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
                       	발주사를 선택하세요
                       </span>                    
                     </label>
                   </div>  
                   
-                  <div class="md:h-auto md:w-1/2 mr-3">
+                  <div class="md:h-auto md:w-1/2">
                     <input type="text" style="display: none;"/>                  
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">발주제품</span>
-                      <!-- <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                          id="pdtSeq" 
-                          name="pdtSeq" 
-                          th:value ="${item.pdtName}"
-                          onkeydown="fnOnKeyDown()" onchange="fnOnChange(this)">     --> 
                       <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-				      id="pdtSeq" name="pdtSeq" >
-					  <option th:if="${!#lists.isEmpty(pdtlist)}and ${item.motCompCd} == ${pdtlist.mbrSeq}"
-					  th:each="pdtlist : ${pdtlist}" th:value="${pdtlist.pdtSeq}" th:text= "${pdtlist.pdtName}" th:data-price = "${pdtlist.pdtPrice}"
-					  th:selected="${item.pdtSeq} == ${pdtlist.pdtSeq}"></option>
+				      	id="pdtSeq" name="pdtSeq" >
+					  	<option th:if="${!#lists.isEmpty(pdtlist)}and ${item.motCompCd} == ${pdtlist.mbrSeq}"
+					  		th:each="pdtlist : ${pdtlist}" th:value="${pdtlist.pdtSeq}" th:text= "${pdtlist.pdtName}" th:data-price = "${pdtlist.pdtPrice}"
+					  		th:selected="${item.pdtSeq} == ${pdtlist.pdtSeq}"></option>
 				      </select>               
                       <span id="pdtSeqValid" name="pdtSeqValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
                       	발주제품을 선택하세요
                       </span>                    
                     </label>
-                  </div>  
-                  
-                  <div class="md:h-auto md:w-1/2">
-                    <input type="text" style="display: none;"/>                  
-                    <label class="block text-sm">
-                      <span class="text-gray-700 dark:text-gray-400">발주수량</span>
-                      <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                          id="motCount" 
-                          name="motCount"    
-                          th:value="${item.motCount}"
-                          onkeydown="fnOnKeyDown()" onchange="fnOnChange(this)">                    
-                      <span id="motCountValid" name="motCountValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-                      	발주수량을 입력하세요
-                      </span>                    
-                    </label>
-                  </div>              
+                  </div>           
                 </div>
                 
-                <div class="flex flex-col md:flex-row">                  
-                  <div class="md:h-auto md:w-1/2 mr-3">
-                    <input type="text" style="display: none;"/>                  
-                    <label class="block text-sm">
-                      <span class="text-gray-700 dark:text-gray-400">발주금액</span>
-                      <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                          id="motAmts" 
-                          name="motAmts"
-                          th:value="${#numbers.formatInteger(item.motAmt, 3, 'COMMA')}"
-                          onkeydown="fnOnKeyDown()" onchange="fnOnChange(this)"> 
-                          <input type="hidden" id="motAmt" name="motAmt"  th:value="${item.motAmt}"> 
-                          <input type="hidden" id="motSeq" name="motSeq"  th:value="${item.motSeq}">                        
-                      <span id="motAmtsValid" name="motAmtsValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-                      	발주금액을 입력하세요
-                      </span>                    
-                    </label>
-                  </div>  
-                   
-                  <div class="md:h-auto md:w-1/2 mr-3">
-                    <input type="text" style="display: none;"/>                  
-                    <label class="block text-sm">
-                      <span class="text-gray-700 dark:text-gray-400">입고여부</span>
-                       <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-				        id="motWarehousingNy" 
-				        name="motWarehousingNy">
-				        <option value="0" th:selected="${item.motWarehousingNy} == 0">미입고</option>
-				        <option value="1" th:selected="${item.motWarehousingNy} == 1">입고</option>
-				        <option value="2" th:selected="${item.motWarehousingNy} == 2">일부입고</option>
-				       </select>                  
-                      <span id="motWarehousingNyValid" name="motWarehousingNyValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-                      	그룹코드명 입력하세요
-                      </span>                    
-                    </label>
-                  </div>  
+                <div class="flex flex-col md:flex-row"> 
+					<div class="md:h-auto md:w-1/2 mr-3">
+	                    <input type="text" style="display: none;"/>                  
+	                    <label class="block text-sm">
+	                      <span class="text-gray-700 dark:text-gray-400">발주수량</span>
+	                      <input class="textRight block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+	                          id="motCount" name="motCount" th:value="${item.motCount}"
+	                          onkeydown="fnOnKeyDown()" onchange="fnOnChange(this)">                    
+	                      <span id="motCountValid" name="motCountValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+	                      	발주수량을 입력하세요
+	                      </span>                    
+	                    </label>
+					</div> 
                   
-                  <div class="md:h-auto md:w-1/2 mr-3">
-
-                  </div>  
-                  
-                  <div class="md:h-auto md:w-1/2">
-
-                  </div>              
+					<div class="md:h-auto md:w-1/2 mr-3">
+	                    <input type="text" style="display: none;"/>                  
+	                    <label class="block text-sm">
+	                      <span class="text-gray-700 dark:text-gray-400">발주금액</span>
+	                      <input class="textRight block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+	                          id="motAmts" name="motAmts" th:value="${#numbers.formatInteger(item.motAmt, 3, 'COMMA')}"
+	                          readonly> 
+	                          <input type="hidden" id="motAmt" name="motAmt"  th:value="${item.motAmt}"> 
+	                          <input type="hidden" id="motSeq" name="motSeq"  th:value="${item.motSeq}">                        
+	                      <span id="motAmtsValid" name="motAmtsValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+	                      	발주금액을 입력하세요
+	                      </span>                    
+	                    </label>
+					</div>  
+                    
+                  	<div class="md:h-auto md:w-1/2"></div>              
                 </div>
-                
               </div> 
   
-              <!-- 저장버튼, 회원조회버튼 -->
-              <div class="flex flex-col md:flex-row mt-4">
-                              
-               <div class="flex md:h-auto sm:mt-auto md:w-1/2">
-               	 <a th:href="@{/myorderList}">
-               		<button
-                    	class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
-                    	aria-label="Search"
-                    	type="button">        
-						<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-						  <path clip-rule="evenodd" fill-rule="evenodd" d="M7.793 2.232a.75.75 0 0 1-.025 1.06L3.622 7.25h10.003a5.375 5.375 0 0 1 0 10.75H10.75a.75.75 0 0 1 0-1.5h2.875a3.875 3.875 0 0 0 0-7.75H3.622l4.146 3.957a.75.75 0 0 1-1.036 1.085l-5.5-5.25a.75.75 0 0 1 0-1.085l5.5-5.25a.75.75 0 0 1 1.06.025Z"></path>
-						</svg>	
-	                </button> 
-                  </a>
-                </div>
-                
-                <div class="flex md:h-auto sm:mt-auto md:w-1/2 sm:justify-end">
-                <!-- 저장버튼 -->  
-                  <button   
-                    id="btnSubmit"
-                    name="btnSubmit"             
-                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
-                    aria-label="Edit"
-                    type="button"
-                  >
-					<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-					  <path clip-rule="evenodd" fill-rule="evenodd" d="M10 1c3.866 0 7 1.79 7 4s-3.134 4-7 4-7-1.79-7-4 3.134-4 7-4Zm5.694 8.13c.464-.264.91-.583 1.306-.952V10c0 2.21-3.134 4-7 4s-7-1.79-7-4V8.178c.396.37.842.688 1.306.953C5.838 10.006 7.854 10.5 10 10.5s4.162-.494 5.694-1.37ZM3 13.179V15c0 2.21 3.134 4 7 4s7-1.79 7-4v-1.822c-.396.37-.842.688-1.306.953-1.532.875-3.548 1.369-5.694 1.369s-4.162-.494-5.694-1.37A7.009 7.009 0 0 1 3 13.179Z"></path>
-					</svg> 
-                  </button> 
-                  
-                <!-- ny변경 버튼 -->
-					<button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red mr-3"
-						id="btnDelNy" name="btnDelNy" aria-label="Edit" type="button">
-
+				<div class="flex flex-col md:flex-row mt-4">
+					<!--이전-->
+					<div class="flex md:h-auto sm:mt-auto md:w-1/2">
+						<button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
+	        				type="button" onclick="fnGoBack();">        
+							<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+				  				<path clip-rule="evenodd" fill-rule="evenodd" d="M7.793 2.232a.75.75 0 0 1-.025 1.06L3.622 7.25h10.003a5.375 5.375 0 0 1 0 10.75H10.75a.75.75 0 0 1 0-1.5h2.875a3.875 3.875 0 0 0 0-7.75H3.622l4.146 3.957a.75.75 0 0 1-1.036 1.085l-5.5-5.25a.75.75 0 0 1 0-1.085l5.5-5.25a.75.75 0 0 1 1.06.025Z"></path>
+							</svg>	
+	        			</button> 
+	    			</div>
+    
+    				<div class="flex md:h-auto sm:mt-auto md:w-1/2 sm:justify-end">
+    					<!-- 저장버튼 -->  
+      					<button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
+        					id="btnSubmit" name="btnSubmit" type="button">
+							<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+		  						<path clip-rule="evenodd" fill-rule="evenodd" d="M10 1c3.866 0 7 1.79 7 4s-3.134 4-7 4-7-1.79-7-4 3.134-4 7-4Zm5.694 8.13c.464-.264.91-.583 1.306-.952V10c0 2.21-3.134 4-7 4s-7-1.79-7-4V8.178c.396.37.842.688 1.306.953C5.838 10.006 7.854 10.5 10 10.5s4.162-.494 5.694-1.37ZM3 13.179V15c0 2.21 3.134 4 7 4s7-1.79 7-4v-1.822c-.396.37-.842.688-1.306.953-1.532.875-3.548 1.369-5.694 1.369s-4.162-.494-5.694-1.37A7.009 7.009 0 0 1 3 13.179Z"></path>
+							</svg> 
+      					</button> 
+      
+      					<!-- ny변경 버튼 -->
+						<button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red mr-3"
+							id="btnDelNy" name="btnDelNy" aria-label="Edit" type="button">
 							<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 								<path clip-rule="evenodd" fill-rule="evenodd" d="M10 4.5c1.215 0 2.417.055 3.604.162a.68.68 0 0 1 .615.597c.124 1.038.208 2.088.25 3.15l-1.689-1.69a.75.75 0 0 0-1.06 1.061l2.999 3a.75.75 0 0 0 1.06 0l3.001-3a.75.75 0 1 0-1.06-1.06l-1.748 1.747a41.31 41.31 0 0 0-.264-3.386 2.18 2.18 0 0 0-1.97-1.913 41.512 41.512 0 0 0-7.477 0 2.18 2.18 0 0 0-1.969 1.913 41.16 41.16 0 0 0-.16 1.61.75.75 0 1 0 1.495.12c.041-.52.093-1.038.154-1.552a.68.68 0 0 1 .615-.597A40.012 40.012 0 0 1 10 4.5ZM5.281 9.22a.75.75 0 0 0-1.06 0l-3.001 3a.75.75 0 1 0 1.06 1.06l1.748-1.747c.042 1.141.13 2.27.264 3.386a2.18 2.18 0 0 0 1.97 1.913 41.533 41.533 0 0 0 7.477 0 2.18 2.18 0 0 0 1.969-1.913c.064-.534.117-1.071.16-1.61a.75.75 0 1 0-1.495-.12c-.041.52-.093 1.037-.154 1.552a.68.68 0 0 1-.615.597 40.013 40.013 0 0 1-7.208 0 .68.68 0 0 1-.615-.597 39.785 39.785 0 0 1-.25-3.15l1.689 1.69a.75.75 0 0 0 1.06-1.061l-2.999-3Z"></path>
 							</svg>
-					
-
-					</button>
-                  
-                  <!-- 삭제 버튼 -->
-                 <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red"
-                    @click="openModal"
-                    id="btnDelete" name="btnDelete" type="button"             
-                    aria-label="Delete">
-					<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-					  <path clip-rule="evenodd" fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z"></path>
-					</svg>
-                  </button> 
-                </div>
-              </div>
+						</button>
+      
+      					<!-- 삭제 버튼 -->
+     					<button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-red-600 border border-transparent rounded-lg active:bg-red-600 hover:bg-red-700 focus:outline-none focus:shadow-outline-red"
+        					@click="openModal"
+        					id="btnDelete" name="btnDelete" type="button"             
+        					aria-label="Delete">
+							<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+		  						<path clip-rule="evenodd" fill-rule="evenodd" d="M8.75 1A2.75 2.75 0 0 0 6 3.75v.443c-.795.077-1.584.176-2.365.298a.75.75 0 1 0 .23 1.482l.149-.022.841 10.518A2.75 2.75 0 0 0 7.596 19h4.807a2.75 2.75 0 0 0 2.742-2.53l.841-10.52.149.023a.75.75 0 0 0 .23-1.482A41.03 41.03 0 0 0 14 4.193V3.75A2.75 2.75 0 0 0 11.25 1h-2.5ZM10 4c.84 0 1.673.025 2.5.075V3.75c0-.69-.56-1.25-1.25-1.25h-2.5c-.69 0-1.25.56-1.25 1.25v.325C8.327 4.025 9.16 4 10 4ZM8.58 7.72a.75.75 0 0 0-1.5.06l.3 7.5a.75.75 0 1 0 1.5-.06l-.3-7.5Zm4.34.06a.75.75 0 1 0-1.5-.06l-.3 7.5a.75.75 0 1 0 1.5.06l.3-7.5Z"></path>
+							</svg>
+      					</button> 
+    				</div>
+  				</div>
             </div>
           </form>          
         </main>
@@ -250,18 +190,18 @@
 		let goUrlSdmUdtOne 	= "/myorderDetailSelNY";		/* 삭제여부변경 */
 
 		// 필수입력체크대상
-		// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)
+		// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수), 5(숫자콤마)
 		//             10(한글영문), 11(한글숫자), 12(영문숫자), 13(한글영문숫자)
 		//			   20(비밀번호), 21(날짜), 22(이메일)
 		//             30(특수문자), 31(공백체크)
-		// TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;
+		// TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;  TYPE_ICM = 5;
 		// TYPE_KREN = 10, TYPE_KRIT = 11, TYPE_ENIT = 12, TYPE_KRENIT = 13;
 		// TYPE_PW   = 20, TYPE_DT   = 21, TYPE_EM   = 22;
 		// TYPE_SP   = 30, TYPE_NULL = 31;
 		let dispText = "";
-		let typeArr = [3,3,3,30,3];		
-		let nameArr = ["motCompCd","pdtSeq","motCount","motAmts","motWarehousingNy"];
-		let textArr = ["발주사를 선택하세요","발주제품을 선택하세요","발주수량을 입력하세요","발주금액을 입력하세요","입고여부를 선택하세요"];	
+		let typeArr = [TYPE_ICM,TYPE_ICM];		
+		let nameArr = ["motCount","motAmts"];
+		let textArr = [dispText,dispText];	
 		
 // ============================================================================
 // event
@@ -296,9 +236,9 @@
 		// event onkeydown
 		fnOnKeyDown = function() {
 			// 엔터키(13)이면
-			if (window.event.keyCode == 13) {
-				fnCallController();
-			};				
+			//if (window.event.keyCode == 13) {
+			//	fnCallController();
+			//};				
 		};
 		
 		// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
@@ -311,6 +251,11 @@
 				};
 			};	
 		};	
+		
+		// 이전페이지
+		function fnGoBack() {
+			location.href = "/myorderDetailList";
+		}
 
 // ============================================================================
 // function

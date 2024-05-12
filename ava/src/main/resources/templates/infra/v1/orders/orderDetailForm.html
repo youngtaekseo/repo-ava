@@ -38,7 +38,7 @@
 			        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 			        			<span class="text-gray-700 dark:text-gray-400">주문고객사</span>
 			            		<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-									id="ortCompCd" name="ortCompCd" >
+									id="ortCompCd" name="ortCompCd" readonly>
 									<option value="">고객사를 선택하세요</option>
 									<option th:if="${!#lists.isEmpty(list)}"
 									th:each="list : ${list}" th:value="${list.mbrSeq}" th:text= "${list.mbrClientName}" th:selected="${item.ortCompCd} == ${list.mbrSeq}"></option>
@@ -52,7 +52,7 @@
 			        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 			        			<span class="text-gray-700 dark:text-gray-400">주문제품</span>
 			        			<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-									id="pdtSeq" name="pdtSeq" >
+									id="pdtSeq" name="pdtSeq" readonly>
 									<option value="">제품을 선택하세요</option>
 									<option th:if="${!#lists.isEmpty(pdtlist)}"
 									th:each="pdtlist : ${pdtlist}" th:value="${pdtlist.pdtSeq}" th:text= "${pdtlist.pdtName}" th:data-price="${pdtlist.pdtPrice}" th:selected="${item.pdtSeq} == ${pdtlist.pdtSeq}"></option>
@@ -71,7 +71,7 @@
 			      			<label class="block text-sm">
 			        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 			        			<span class="text-gray-700 dark:text-gray-400">주문수량</span>
-			        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+			        			<input class="textRight block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
 			            			id="ortCount" name="ortCount" placeholder="주문수량" th:value="${item.ortCount}" readonly>
 			      			</label>
 			    		</div>
@@ -82,8 +82,9 @@
 			      			<label class="block text-sm">
 			        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 			        			<span class="text-gray-700 dark:text-gray-400">주문총액</span>
-			        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-			            			id="ortAmts" name="ortAmts" placeholder="주문총액" th:value="${#numbers.formatInteger(item.ortAmt, 3, 'COMMA')}">
+			        			<input class="textRight block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+			            			id="ortAmts" name="ortAmts" placeholder="주문총액" readonly
+			            			th:value="${#numbers.formatInteger(item.ortAmt, 3, 'COMMA')}">
 			      			</label>
 			    		</div>
 					</div>
@@ -97,12 +98,14 @@
 			        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 			        			<span class="text-gray-700 dark:text-gray-400">배송사</span>
 			        			<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-									id="ortShippingCd" name="ortShippingCd" >
+									id="ortShippingCd" name="ortShippingCd" onchange="fhShippingChange();">
 									<option value="">배송사를 선택하세요</option>
 									<option th:if="${!#lists.isEmpty(courierList)}"
-									th:each="courierList : ${courierList}" th:value="${courierList.mbrSeq}" th:text= "${courierList.mbrClientName}" th:selected="${item.ortShippingCd} == ${courierList.mbrSeq}"></option>
+										th:each="courierList : ${courierList}" th:value="${courierList.mbrSeq}" th:text= "${courierList.mbrClientName}" th:selected="${item.ortShippingCd} == ${courierList.mbrSeq}"></option>
 								</select>
-								<span id="cdgNameValid" name="cdgNameValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;"></span>		            			
+								<span id="ortShippingCdValid" name="ortShippingCdValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+									배송사를 선택하세요
+								</span>		            			
 			      			</label>
 			    		</div>
 			      		
@@ -112,8 +115,9 @@
 			        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 			        			<span class="text-gray-700 dark:text-gray-400">출고일</span>
 			        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-				                            id="ortDt" name="ortReleaseDt"
-				                            th:value="${#strings.substring(item.ortReleaseDt, 0, 10)}">
+									id="ortReleaseDt" name="ortReleaseDt"
+				                    th:value="${#strings.substring(item.ortReleaseDt, 0, 10)}">
+				                <span id="ortReleaseDtValid" name="ortReleaseDtValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;"></span>
 			      			</label>
 			    		</div>
 					</div>
@@ -124,16 +128,12 @@
               <div class="flex flex-col md:flex-row mt-4">
                 <!-- 이전 -->
                 <div class="md:h-auto sm:mt-auto md:w-1/2">
-	                <a th:href="@{/orderDetailList}">
-	                  <button
-    	                class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
-        	            aria-label="Search"
-            	        type="button">        
-						<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-						  <path clip-rule="evenodd" fill-rule="evenodd" d="M7.793 2.232a.75.75 0 0 1-.025 1.06L3.622 7.25h10.003a5.375 5.375 0 0 1 0 10.75H10.75a.75.75 0 0 1 0-1.5h2.875a3.875 3.875 0 0 0 0-7.75H3.622l4.146 3.957a.75.75 0 0 1-1.036 1.085l-5.5-5.25a.75.75 0 0 1 0-1.085l5.5-5.25a.75.75 0 0 1 1.06.025Z"></path>
-						</svg>	
-	                  </button> 
-					</a>
+                  <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
+    	            aria-label="Search" type="button" onclick="fnGoBack();">        
+					<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+					  <path clip-rule="evenodd" fill-rule="evenodd" d="M7.793 2.232a.75.75 0 0 1-.025 1.06L3.622 7.25h10.003a5.375 5.375 0 0 1 0 10.75H10.75a.75.75 0 0 1 0-1.5h2.875a3.875 3.875 0 0 0 0-7.75H3.622l4.146 3.957a.75.75 0 0 1-1.036 1.085l-5.5-5.25a.75.75 0 0 1 0-1.085l5.5-5.25a.75.75 0 0 1 1.06.025Z"></path>
+					</svg>	
+                  </button> 
                 </div>  
                               
                 <!-- 저장버튼 -->
@@ -156,7 +156,10 @@
 // ============================================================================
 // 변수선언
 // ============================================================================
-		let form			= document.querySelector("form[name=form]");
+		let form = document.querySelector("form[name=form]");
+		
+		let ortShippingCd      = document.querySelector("#ortShippingCd");
+		let ortShippingCdValid = document.querySelector("#ortShippingCdValid");
 
 		let goUrlSdmList   	= "/codeGroupSdmList";		/* 조회화면 */
 		let goUrlSdmForm   	= "/codeGroupSdmForm";		/* 수정화면 */
@@ -176,8 +179,8 @@
 		// TYPE_PW   = 20, TYPE_DT   = 21, TYPE_EM   = 22;
 		// TYPE_SP   = 30, TYPE_NULL = 31;
 		let dispText = "";
-		let typeArr = [TYPE_KRENIT];		
-		let nameArr = ["cdgName"];
+		let typeArr = [TYPE_DT];		
+		let nameArr = ["ortReleaseDt"];
 		let textArr = [dispText];	
 		
 // ============================================================================
@@ -187,7 +190,7 @@
     	window.addEventListener('load', function() {
 			jQuery.datetimepicker.setLocale('ko'); // 한국어
 	
-			$("#ortDt").datetimepicker({
+			$("#ortReleaseDt").datetimepicker({
 				timepicker:false,
 				format: 'Y-m-d', //'Y-m-d' //H:i
 			});
@@ -195,25 +198,11 @@
 		
     	// 저장버튼
 		document.getElementById("btnSubmit").onclick = function() {
-			//fnCallController();
-			// 저장
-			form.action = goUrlSdmUpdate;
-			form.submit();			
+			fnCallController();
 		};
-		
-		// 삭제버튼
-		document.getElementById("btnDelete").onclick = function() {
-			fnModalCaptionChange(1,"", "");	
-		};
-		
-		//ny 변경 버튼
-		document.getElementById("btnDelNy").onclick = function() {
-			form.action = goUrlSdmUdtOne;
-			form.submit();
-		};		
 		
 		// event onkeydown
-		fnOnKeyDown = function() {
+		function fnOnKeyDown() {
 			// 엔터키(13)이면
 			if (window.event.keyCode == 13) {
 				fnCallController();
@@ -221,7 +210,7 @@
 		};
 		
 		// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
-		fnOnChange = function(obj) {
+		function fnOnChange(obj) {
 			if(window.event.keyCode != 13) {
 				switch(obj.name) {
 				case "cdgName" :
@@ -230,27 +219,46 @@
 				};
 			};	
 		};	
+		
+		// 배송사선택
+		function fhShippingChange() {
+			ortShippingCd.setAttribute("class", "block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+			ortShippingCdValid.setAttribute("style", "visibility:hidden;");				
+		}			
+		
+		// 이전 페이지 이동
+		function fnGoBack() {
+			location.href = "/orderDetailList";
+		}
 
 // ============================================================================
 // function
 // ============================================================================
 
 		// controller 호출
-		fnCallController = function() {
-			/* if(!fnValidation()) {return false;}; */
+		function fnCallController() {
+			if(!fnValidationForm()) {return false;};
+			if(!fnValidation()) {return false;};
+			
 			// 저장
 			form.action = goUrlSdmUpdate;
 			form.submit();
 		};	
 		
 		// 필수입력 확인
-	    fnValidationForm = function() {
-			let validChk = false;		
-			return validChk;
+	    function fnValidationForm() {
+			// 배송사
+			if(ortShippingCd.value == "") {
+				ortShippingCd.setAttribute("class","block w-full mt-1 text-sm dark:text-gray-300 border-red-600  dark:border-gray-600 dark:bg-gray-700 form-select focus:border-red-400 focus:outline-none focus:shadow-outline-red dark:focus:shadow-outline-gray");
+				ortShippingCdValid.setAttribute("style", "");
+				return false;
+			}
+			
+			return true;
 		};
 		
 		// 삭제
-		fnDataDelete = function() {
+		function fnDataDelete() {
 			form.action = goUrlSdmDelete;
 			form.submit(); 
 		}

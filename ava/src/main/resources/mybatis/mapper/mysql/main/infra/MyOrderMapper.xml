@@ -18,8 +18,19 @@
 					 , a.mbrSeq 
 					 , (SELECT COUNT(*) 
 						  FROM myorderdetail aa 
-						 WHERE aa.morSeq = a.morSeq		        
+						 WHERE aa.morSeq   = a.morSeq
+						   AND aa.motDelNy = 0
 					   ) xmorCount
+					 , (SELECT ifnull(sum(aa.motCount),0) 
+						  FROM myorderdetail aa 
+						 WHERE aa.morSeq   = a.morSeq
+						   AND aa.motDelNy = 0
+					   ) xmotCount  
+					 , (SELECT ifnull(sum(aa.motAmt),0) 
+						  FROM myorderdetail aa 
+						 WHERE aa.morSeq   = a.morSeq
+						   AND aa.motDelNy = 0
+					   ) xmotAmt
 				  FROM myorder a
 				 WHERE 1=1   
    					   <include refid="selectCommon"/> 
@@ -101,14 +112,12 @@
 	
 	<!-- 체크된 리스트 삭제 -->
 	<delete id = "myorderListDelete">
-		delete 
-			from
-				myorder
-			where 1=1
-			AND morSeq IN
-			<foreach collection="shCheckedArray" item="list" open="(" close=")" separator=",">
-	    	         #{list}
-	    	</foreach>
+		DELETE FROM myorder
+		 WHERE 1 = 1
+		   AND morSeq IN
+				<foreach collection="shCheckedArray" item="list" open="(" close=")" separator=",">
+					#{list}
+				</foreach>
 	</delete>
 	
 	<!-- 체크된 리스트 자식요소 삭제 -->
@@ -143,7 +152,7 @@
 					 , c.pdtName 
 					 , a.motCount 
 					 , a.motAmt
-					 , a.motWarehousingNy 
+					 , ifnull(a.motWarehousingNy,0) motWarehousingNy 
 					 , a.motDelNy 
 					 , a.motRegDt 
 					 , a.motModDt
@@ -184,58 +193,45 @@
 	
 	<!-- 발주 디테일 수정폼 -->
 	<select  id="myorderdetailitem" resultMap="resultMapObj">
-	
-	select
-	a.motSeq 
-	,b.morDate 
-	,a.motCompCd 
-	,c.pdtName 
-	,c.pdtSeq
-	,a.motCount 
-	,a.motAmt
-	,a.motWarehousingNy 
-	,a.motDelNy 
-	,a.motRegDt 
-	,a.motModDt
-	,b.mbrSeq 
-		from 
-			myorderdetail a
-		join
-			myorder b
-		on 
-			a.morSeq = b.morSeq
-		join 
-			product c
-		on 
-			a.pdtSeq  = c.pdtSeq 
-		where 
-			a.motSeq = #{motSeq}
+		SELECT a.motSeq 
+			 , b.morDate 
+			 , a.motCompCd 
+			 , c.pdtName 
+			 , c.pdtSeq
+			 , a.motCount 
+			 , a.motAmt
+			 , ifnull(a.motWarehousingNy,0) motWarehousingNy 
+			 , a.motDelNy 
+			 , a.motRegDt 
+			 , a.motModDt
+			 , b.mbrSeq 
+		  FROM myorderdetail a
+			   JOIN myorder b
+				 ON a.morSeq = b.morSeq
+			   JOIN	product c
+				 ON a.pdtSeq  = c.pdtSeq 
+		 WHERE a.motSeq = #{motSeq}
 	</select>
 	
 	<!-- 발주사 이름 -->
 	<select  id="clientNameList" resultMap="resultMapObj">
-	select 
-		mbrSeq,
-		mbrClientName,
-		mbrClientCd 
-			from members
-				where 
-				 mbrClientCd  = '4';
+		SELECT mbrSeq
+			 , mbrClientName
+			 , mbrClientCd 
+		  FROM members
+		 WHERE 1 = 1
+		   AND mbrClientCd = '4'
 	</select>
 	
 	<!-- 발주등록 발주 제품 리스트 -->
 	<select id="productList" resultMap="resultMapObj">
-	select 
-		pdtSeq 
-		,pdtName 
-		,pdtPrice 
-		,mbrSeq
-			from 
-				product 
-			where 1=1
+		SELECT pdtSeq 
+			 , pdtName 
+			 , pdtPrice 
+		  	 , mbrSeq
+		  FROM product 
+		 WHERE 1 = 1
 	</select>
-	
-	
 	
 	<!-- 발주 디테일 등록 -->
 	<insert id= "myorderdetailinsert">

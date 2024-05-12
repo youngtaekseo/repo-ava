@@ -36,13 +36,13 @@
 			        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 			        			<span class="text-gray-700 dark:text-gray-400">주문고객사</span>
 			            		<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-									id="ortCompCd" name="ortCompCd" >
-									<option value="">고객사를 선택하세요</option>
+									id="ortCompCd" name="ortCompCd" onchange="fnCompChange();">
+									<option value="">고객사 선택하세요</option>
 									<option th:if="${!#lists.isEmpty(list)}"
 									th:each="list : ${list}" th:value="${list.mbrSeq}" th:text= "${list.mbrClientName}"></option>
 								</select>
 								<span id="ortCompCdValid" name="ortCompCdValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-									고객사를 선택하세요
+									고객사 선택하세요
 								</span> 		            			
 			      			</label>
 			    		</div>
@@ -54,12 +54,12 @@
 			        			<span class="text-gray-700 dark:text-gray-400">주문제품</span>
 			        			<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
 									id="pdtSeq" name="pdtSeq" onchange="fnOrderCountCheck();">
-									<option value="">제품을 선택하세요</option>
+									<option value="">주문제품 선택하세요</option>
 									<option th:if="${!#lists.isEmpty(pdtlist)}"
 										th:each="pdtlist : ${pdtlist}" th:value="${pdtlist.pdtSeq}" th:text= "${pdtlist.pdtName}" th:data-price="${pdtlist.pdtPrice}"></option>
 								</select>
 								<span id="pdtSeqValid" name="pdtSeqValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-									제품을 선택하세요
+									주문제품 선택하세요
 								</span> 
 			      			</label>
 			    		</div>
@@ -68,8 +68,8 @@
 			    		<div class="md:h-auto md:w-1/2">
 			      			<label class="block text-sm">
 			        			<span class="text-gray-700 dark:text-gray-400">주문가능수량</span>
-			        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-			            			id="ortOrderCount" name="ortOrderCount" placeholder="0" readonly style="text-align: right;">
+			        			<input class="textRight block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+			            			id="ortOrderCount" name="ortOrderCount" placeholder="0" readonly>
 			            		<span id="ortOrderCountValid" name="ortOrderCountValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 									주문가능 수량이 없습니다
 								</span>   			
@@ -83,8 +83,8 @@
 			      			<label class="block text-sm">
 			        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 			        			<span class="text-gray-700 dark:text-gray-400">주문수량</span>
-			        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-			            			id="ortCount" name="ortCount" placeholder="0" style="text-align: right;">
+			        			<input class="textRight block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+			            			id="ortCount" name="ortCount" placeholder="0" readonly oninput="fnCalcAmt();">
 			            		<span id="ortCountValid" name="ortCountValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
 									입력값이 없습니다
 								</span>   			
@@ -97,8 +97,8 @@
 			      			<label class="block text-sm">
 			        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 			        			<span class="text-gray-700 dark:text-gray-400">주문총액</span>
-			        			<input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-			            			id="ortAmts" name="ortAmts" placeholder="0" style="text-align: right;" readonly>
+			        			<input class="textRight block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+			            			id="ortAmts" name="ortAmts" placeholder="0" readonly>
 			            	<span id="ortAmtsValid" name="ortAmtsValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;"></span> 	            			
 			      			</label>
 			    		</div>
@@ -142,18 +142,23 @@
 // ============================================================================
 		let form			= document.querySelector("form[name=form]");
 	
-		// 그룹코드명
+		// 주문가능수량
 		let ortOrderCount      = document.querySelector("input[name=ortOrderCount]");
 		let ortOrderCountValid = document.querySelector("span[name=ortOrderCountValid]");
+		
+		// 주문수량
 		let ortCount           = document.querySelector("input[name=ortCount]");
 		let ortCountValid      = document.querySelector("span[name=ortCountValid]");
 		
+		// 주문고객사
 		let ortCompCd      = document.querySelector("select[name=ortCompCd]");
 		let ortCompCdValid = document.querySelector("span[name=ortCompCdValid]");
 
+		// 주문제품
 		let pdtSeq   	   = document.querySelector("select[name=pdtSeq]");
 		let pdtSeqValid	   = document.querySelector("span[name=pdtSeqValid]");
 
+		// 컨트롤러 변수
 		let goUrlSdmList   	= "/codeGroupSdmList";		/* 조회화면 */
 		let goUrlSdmForm   	= "/codeGroupSdmForm";		/* 수정화면 */
 		let goUrlSdmCreate 	= "/codeGroupSdmCreate";	/* 등록화면 */
@@ -185,35 +190,69 @@
 			fnCallController();
 		};
 		
+		// 고객사선택
+		function fnCompChange() {
+			ortCompCd.setAttribute("class", "block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+			ortCompCdValid.setAttribute("style", "visibility:hidden;");				
+		}
+		
 		// 주문제품 선택시 주문가능수량조회
 		function fnOrderCountCheck() {
-			let pdtSeq = $("select[name=pdtSeq]").val();
-			
-			if(pdtSeq == ""){
-				ortOrderCount.setAttribute("class", "block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+			// 주문제품
+			let shValue = $("select[name=pdtSeq]").val();
+
+			if(shValue == ""){
+				// 주문가능수량
+				ortOrderCount.setAttribute("class", "textRight block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+				ortOrderCount.value = "0";
 				ortOrderCountValid.setAttribute("style", "visibility:hidden;");
-				ortCount.readOnly = false;
+				
+				// 주문수량
+				ortCount.readOnly = true;
+				ortCount.value = "0";
+				ortAmts.value = "0";
 				ortCountValid.setAttribute("style", "visibility:hidden;");				
 				return false;
 			} else {
+				// 주문제품
 				pdtSeq.setAttribute("class","block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray");
 				pdtSeqValid.setAttribute("style", "visibility:hidden;");
+				
+				// 주문가능수량
+				ortOrderCount.setAttribute("class", "textRight block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+				ortOrderCountValid.setAttribute("style", "visibility:hidden;");				
 			}
 			
 			$.ajax({
 				async: true
 				, cache: false
 				, type: "post"
-				, data: {"shValue":pdtSeq}
+				, data: {"shValue":shValue}
 				, url: "/orderCountCheck"
 				, success: function(response) {
 					let count = response.orderCountCheck;
+					
 					if(count > 0) {
-						$("#ortOrderCount").val(count);						
+						// 주문가능수량
+						ortOrderCount.value = count;
+						
+						// 주문수량
+						ortCount.readOnly = false;
+						ortCount.value = count;
+						ortCount.focus();	
+						
+						// 주문총액계산
+						fnCalcAmt();					
 					} else {
-						ortOrderCount.setAttribute("class","block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+						// 주문가능수량
+						ortOrderCount.setAttribute("class","textRight block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+						ortOrderCount.value = "0";
 						ortOrderCountValid.setAttribute("style", "");
+						
+						// 주문수량
 						ortCount.readOnly = true;
+						ortCount.value = "0";
+						ortAmts.value = "0";
 						ortCountValid.setAttribute("style", "visibility:hidden;");
 					}
 				}
@@ -224,7 +263,7 @@
 		}
 		
 		// event onkeydown
-		fnOnKeyDown = function() {
+		function fnOnKeyDown() {
 			// 엔터키(13)이면
 			if (window.event.keyCode == 13) {
 				fnCallController();
@@ -232,7 +271,7 @@
 		};
 		
 		// fnValidType(obj:input tag객체, objValid:메시지표시 tag명, validText:objValid tag에 표시할 메시지, validType:정규식종류)
-		fnOnChange = function(obj) {
+		function fnOnChange(obj) {
 			if(window.event.keyCode != 13) {
 				switch(obj.name) {
 				case "cdgName" :
@@ -252,7 +291,7 @@
 // ============================================================================
 
 		// controller 호출
-		fnCallController = function() {
+		function fnCallController() {
 			//if(!fnValidation()) {return false;};
 			if(!fnValidationForm()) {return false;};
 			
@@ -262,19 +301,19 @@
 		};	
 		
 		// 필수입력 확인
-	    fnValidationForm = function() {
+	    function fnValidationForm() {
 			// 주문고객사
 			if(ortCompCd.value == "") {
 				ortCompCd.setAttribute("class","block w-full mt-1 text-sm dark:text-gray-300 border-red-600  dark:border-gray-600 dark:bg-gray-700 form-select focus:border-red-400 focus:outline-none focus:shadow-outline-red dark:focus:shadow-outline-gray");
 				ortCompCdValid.setAttribute("style", "");
-				return validChk;
+				return false;
 			}
 			
 			// 제품선택
 			if(pdtSeq.value == "") {
 				pdtSeq.setAttribute("class","block w-full mt-1 text-sm dark:text-gray-300 border-red-600 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-red-400 focus:outline-none focus:shadow-outline-red dark:focus:shadow-outline-gray");
 				pdtSeqValid.setAttribute("style", "");
-				return validChk;
+				return false;
 			}
 				
 			// 수량
@@ -284,15 +323,13 @@
 			} else {
 				return fnNullToEmpty(ortCount, ortCountValid, "");
 			};
-							
-			
 		};
 
     </script>
 
     <script th:inline="javascript">
 		// 수량 입력시 총합 가격 자동 입력
-		document.getElementById("ortCount").onchange = function(){
+		function fnCalcAmt(){
 			let select = document.getElementById("pdtSeq");
 			let option = select.options[select.selectedIndex];
 			let price = option.dataset.price;

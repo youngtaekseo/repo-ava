@@ -26,6 +26,7 @@
             			<!-- 검색조건 -->
             			<form id="form" name="form" method="get" autocomplete="off">
 							<input type="hidden" id="pgPage" name="pgPage" th:value="${vo.pgPage}" default="1">
+							
 			  				<div class="w-full px-4 py-3 mb-8 bg-white rounded-lg shadow-xs dark:bg-gray-800">
                 				<div class="flex flex-col md:flex-row">
                     				<!-- 삭제여부 -->
@@ -173,7 +174,7 @@
                   						</tr>
 					                  	<tr class="text-gray-700 dark:text-gray-400" th:if="${!#lists.isEmpty(list)}" th:each="list : ${list}">
 					                  		<td class="px-2 py-1">
-					                  			<input th:if="${list.ordReleasedNy} != 1" class="checkboxList text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray mr-3"
+					                  			<input th:if="${list.ordReleasedNy == 0}" class="checkboxList text-purple-600 form-checkbox focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray mr-3"
 					                  				id = "checkbox" name="checkbox" type="checkbox"
 					                  				th:value="${list.ordSeq}"
 					                        		style="height: 15px; width: 15px"
@@ -212,6 +213,11 @@
 						                        			일&emsp;부
 						                        		</span>                          		
 						                        	</th:block>
+												</th:block>
+												<th:block th:unless="${list.xortCount != 0}">
+													<span class="px-2 py-1 font-semibold text-orange-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+						                      		 	주문전
+						                      		</span>
 												</th:block>
 					                        </td>
 					                        <!--등록일시-->
@@ -293,7 +299,7 @@
                 				<span class="flex col-span-3 sm:mt-auto sm:justify-end">
 								<!-- 추가버튼 -->          
 								<a th:href="@{/orderInsert}">
-					                <button  class="btnSave flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-2" aria-label="Create"
+					                <button  class="btnSave flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3" aria-label="Create"
 				                    	id="btnInsert"
 				                    	name="btnInsert">
 										<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
@@ -465,13 +471,13 @@
 		// 선택된 자료 삭제
 		fnDataDelete = function() {
 			// 체크된 항목 담을 배열변수
-			let checkedArray = [];
+			let checkedArray = [];	
 			
 			let checkedList = document.querySelectorAll("input[name=checkbox]");
 			
 			for(let i = 0; i < checkedList.length; i++) {
 				if(checkedList[i].checked) {
-					checkedArray[i] = checkedList[i].value;
+					checkedArray.push(checkedList[i].value);
 				} 
 			}
 			

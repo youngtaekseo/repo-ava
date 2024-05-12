@@ -148,7 +148,9 @@
                       						<th class="px-1 py-1" style="text-align: center;">#</th>
                       						<th class="px-2 py-1" style="text-align: center;">발주번호</th>
                       						<th class="px-2 py-1">발주일자</th>
-                      						<th class="px-2 py-1">당담자</th>
+                      						<th class="px-2 py-1">발주담당</th>
+                      						<th class="px-2 py-1" style="text-align: right">발주수량</th>
+                      						<th class="px-2 py-1" style="text-align: right">발주금액</th>
                       						<th class="px-2 py-1" style="text-align: center;">입고여부</th>
                       						<th class="px-2 py-1" style="text-align: center;">삭제여부</th>
                       						<th class="px-2 py-1">등록일시</th>
@@ -163,7 +165,7 @@
                   						<input type="hidden" id="shCheckedArray" name="shCheckedArray" value="" />
                   						
                   						<tr th:if="${#lists.isEmpty(list)}">
-					                  		<td colspan="10" class="text-center text-purple-600"> 
+					                  		<td colspan="11" class="text-center text-purple-600"> 
 												There is no data !!!
 					                  		</td>
                   						</tr>
@@ -175,26 +177,40 @@
 					                        		style="height: 15px; width: 15px"
 					                        		th:checked="false" />
 					                    	</td>
+					                    	<!--row순번-->
 					                    	<td id="xRowNum" name="xRowNum" class="px-1 py-1" th:text="${list.xRowNum}" style="text-align: center;"></td>
+					                    	<!--발주순번-->
 					                    	<td style="text-align: center;" id="morSeq" name="morSeq" class="px-1 py-1" th:text="${list.morSeq}"></td>
-					                    	
+					                    	<!--발주일자-->
 					                    	<td class="px-2 py-1"  th:text="${#dates.format(list.morDate, 'yyyy-MM-dd')}"></td>
+					                    	<!--발주담당자-->
 					                    	<td class="px-2 py-1" th:text="${@membersService.selectOneMembersName(list.mbrSeq)}"></td>
-					                    	
+					                    	<!--발주수량-->
+					                    	<td class="px-2 py-1" style="text-align: right;" th:text="${#numbers.formatInteger(list.xmotCount, 1, 'COMMA')}"></td>
+					                    	<!--발주금액-->
+					                    	<td class="px-2 py-1" style="text-align: right;" th:text="${#numbers.formatInteger(list.xmotAmt, 1, 'COMMA')}"></td>
+					                    	<!--입고여부-->
 					                    	<td class="px-2 py-1" style="text-align: center;">
-												<th:block th:switch="${list.morWarehousingNy}" >
-													<span th:case="0" class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-600 rounded-full dark:text-white dark:bg-red-700"
-						                      		 	th:if="${list.morWarehousingNy == 0}">미입고
-						                      		</span>
-						                      		<span th:case="1" class="px-2 py-1 font-semibold leading-tight text-blue-100 bg-blue-600 rounded-full dark:text-white dark:bg-blue-700"
-						                      		 	th:if="${list.morWarehousingNy == 1}">완&emsp;료
-						                      		</span>
-						                      		<span th:case="2" class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-600 rounded-full dark:text-white dark:bg-red-700"
-						                      		 	th:if="${list.morWarehousingNy == 2}">일&emsp;부
+												<th:block th:if="${list.xmorCount != 0}">
+													<th:block th:switch="${list.morWarehousingNy}" >
+														<span th:case="0" class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-600 rounded-full dark:text-white dark:bg-red-700"
+							                      		 	th:if="${list.morWarehousingNy == 0}">미입고
+							                      		</span>
+							                      		<span th:case="1" class="px-2 py-1 font-semibold leading-tight text-blue-100 bg-blue-600 rounded-full dark:text-white dark:bg-blue-700"
+							                      		 	th:if="${list.morWarehousingNy == 1}">완&emsp;료
+							                      		</span>
+							                      		<span th:case="2" class="px-2 py-1 font-semibold leading-tight text-red-100 bg-red-600 rounded-full dark:text-white dark:bg-red-700"
+							                      		 	th:if="${list.morWarehousingNy == 2}">일&emsp;부
+							                      		</span>
+													</th:block>
+												</th:block>
+												<th:block th:unless="${list.xmorCount != 0}">
+													<span class="px-2 py-1 font-semibold text-orange-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
+						                      		 	발주전
 						                      		</span>
 												</th:block>
 											</td>
-                        
+                        					<!--삭제여부-->
 					                        <td class="px-2 py-1" style="text-align: center;">
 					                        	<th:block th:switch="${list.morDelNy}" >
 					                        		<span th:case = "0"
@@ -207,31 +223,22 @@
 					                        		</span>                        		
 					                        	</th:block>
 					                        </td>        	
-                   	
+                   							<!--등록일시-->
 					                    	<td class="px-2 py-1" th:text="${#dates.format(list.morRegDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-					                    	
+					                    	<!--수정일시-->
 					                    	<td class="px-2 py-1" th:text="${#dates.format(list.morModDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
-					                    
+					                    	<!--작업-->
 					                    	<td class="px-2 py-1">
 												<!-- 추가 -->
 												<div class="flex flex-col overflow-y-auto md:flex-row">
-													<th:block th:if="${list.xmorCount == 0}">
-		                      							<a th:href="@{/myorderDetailCreate(morSeq=${list.morSeq})}">
-		                      							  <button class="btnSave flex items-center px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Create"
-									                    	id="btnInsert" name="btnInsert">
-															<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-															  <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z"></path>
-															</svg>															
-										                  </button> 
-										                </a>
-													</th:block>
-													<th:block th:unless="${list.xmorCount == 0}">
-		                      							  <button class="btnSave flex items-center px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Create">
-															<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-															  <path clip-rule="evenodd" fill-rule="evenodd" d="M10 1a4.5 4.5 0 0 0-4.5 4.5V9H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-6a2 2 0 0 0-2-2h-.5V5.5A4.5 4.5 0 0 0 10 1Zm3 8V5.5a3 3 0 1 0-6 0V9h6Z"></path>
-															</svg>															
-										                  </button> 
-													</th:block>
+	                      							<a th:href="@{/myorderDetailCreate(morSeq=${list.morSeq})}">
+	                      							  <button class="btnSave flex items-center px-2 py-1 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Create"
+								                    	id="btnInsert" name="btnInsert">
+														<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+														  <path d="M10.75 4.75a.75.75 0 0 0-1.5 0v4.5h-4.5a.75.75 0 0 0 0 1.5h4.5v4.5a.75.75 0 0 0 1.5 0v-4.5h4.5a.75.75 0 0 0 0-1.5h-4.5v-4.5Z"></path>
+														</svg>															
+									                  </button> 
+									                </a>
 								                </div>
                     						</td>
                   						</tr> 
@@ -272,6 +279,16 @@
                 				</span>
                               
                 				<span class="flex col-span-3 sm:mt-auto sm:justify-end">
+									<!-- 추가버튼 -->        
+									<a th:href="@{/myorderinsert}">        
+				                 		<button class="mr-3 btnSave flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Create"
+			                    			id="btnInsert" name="btnInsert">
+											<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+									  			<path d="M2 4.25A2.25 2.25 0 0 1 4.25 2h2.5A2.25 2.25 0 0 1 9 4.25v2.5A2.25 2.25 0 0 1 6.75 9h-2.5A2.25 2.25 0 0 1 2 6.75v-2.5ZM2 13.25A2.25 2.25 0 0 1 4.25 11h2.5A2.25 2.25 0 0 1 9 13.25v2.5A2.25 2.25 0 0 1 6.75 18h-2.5A2.25 2.25 0 0 1 2 15.75v-2.5ZM11 4.25A2.25 2.25 0 0 1 13.25 2h2.5A2.25 2.25 0 0 1 18 4.25v2.5A2.25 2.25 0 0 1 15.75 9h-2.5A2.25 2.25 0 0 1 11 6.75v-2.5ZM15.25 11.75a.75.75 0 0 0-1.5 0v2h-2a.75.75 0 0 0 0 1.5h2v2a.75.75 0 0 0 1.5 0v-2h2a.75.75 0 0 0 0-1.5h-2v-2Z"></path>
+											</svg>	
+				                 		</button>  
+				                	</a> 
+				                	
 									<!-- 홈버튼 -->
 									<a th:href="@{/myorderDetailList}">   
 										<button class="flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Back"> 
@@ -280,16 +297,6 @@
 											</svg>	
 					                  </button> 
 				                  	</a>             
-									&nbsp;&nbsp;  
-									<!-- 추가버튼 -->        
-									<a th:href="@{/myorderinsert}">        
-				                 		<button class="btnSave flex items-center px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple" aria-label="Create"
-			                    			id="btnInsert" name="btnInsert">
-											<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-									  			<path d="M2 4.25A2.25 2.25 0 0 1 4.25 2h2.5A2.25 2.25 0 0 1 9 4.25v2.5A2.25 2.25 0 0 1 6.75 9h-2.5A2.25 2.25 0 0 1 2 6.75v-2.5ZM2 13.25A2.25 2.25 0 0 1 4.25 11h2.5A2.25 2.25 0 0 1 9 13.25v2.5A2.25 2.25 0 0 1 6.75 18h-2.5A2.25 2.25 0 0 1 2 15.75v-2.5ZM11 4.25A2.25 2.25 0 0 1 13.25 2h2.5A2.25 2.25 0 0 1 18 4.25v2.5A2.25 2.25 0 0 1 15.75 9h-2.5A2.25 2.25 0 0 1 11 6.75v-2.5ZM15.25 11.75a.75.75 0 0 0-1.5 0v2h-2a.75.75 0 0 0 0 1.5h2v2a.75.75 0 0 0 1.5 0v-2h2a.75.75 0 0 0 0-1.5h-2v-2Z"></path>
-											</svg>	
-				                 		</button>  
-				                	</a>                
                 				</span>                
               				</div>
             		</div>
@@ -456,7 +463,7 @@
 			
 			for(let i = 0; i < checkedList.length; i++) {
 				if(checkedList[i].checked) {
-					checkedArray[i] = checkedList[i].value;
+					checkedArray.push(checkedList[i].value);
 				} 
 			}
 			

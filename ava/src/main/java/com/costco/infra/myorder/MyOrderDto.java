@@ -15,7 +15,6 @@ public class MyOrderDto extends MembersDto{
 	private Integer morDelNy;			//삭제여부
 	private Date morRegDt;				//등록일시
 	private Date morModDt;				//수정일시
-
 	
 //	myorderdetail 변수
 	private String motSeq;				//발주상세순번
@@ -29,6 +28,8 @@ public class MyOrderDto extends MembersDto{
 	
 	
 	private Integer xmorCount;
+	private Integer xmotCount;
+	private Double  xmotAmt;
 	private String xRowNum;
 	
 	private String pdtName;
@@ -158,6 +159,18 @@ public class MyOrderDto extends MembersDto{
 	}
 	public void setPdtPrice(Double pdtPrice) {
 		this.pdtPrice = pdtPrice;
+	}
+	public Integer getXmotCount() {
+		return xmotCount;
+	}
+	public void setXmotCount(Integer xmotCount) {
+		this.xmotCount = xmotCount;
+	}
+	public Double getXmotAmt() {
+		return xmotAmt;
+	}
+	public void setXmotAmt(Double xmotAmt) {
+		this.xmotAmt = xmotAmt;
 	} 
 	
 }

@@ -31,19 +31,14 @@
                     <input type="text" style="display: none;"/>                  
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">발주사</span>
-                      
                       <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-				      id="motCompCd" name="motCompCd" 
-				      >
-				      
-				      <option value = "no">선택하세요</option>
-				      <option th:if="${!#lists.isEmpty(list)}"
-					  th:each="list : ${list}" th:value="${list.mbrSeq}" th:text= "${list.mbrClientName}"></option>
+				      	id="motCompCd" name="motCompCd" onchange="fnCompCdChange();">
+					      <option value = "">발주사 선택하세요</option>
+					      <option th:if="${!#lists.isEmpty(list)}"
+						  	th:each="list : ${list}" th:value="${list.mbrSeq}" th:text= "${list.mbrClientName}"></option>
 				      </select>   
-				         
-				             
                       <span id="motCompCdValid" name="motCompCdValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-                      	발주사를 선택하세요
+                      	발주사 선택하세요
                       </span>                    
                     </label>
                   </div>  
@@ -53,13 +48,11 @@
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">발주제품</span>
                       <select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-				      id="pdtSeq" name="pdtSeq" >
-				      <option value="">선택하세요</option>
-				      <!-- <option th:if="${!#lists.isEmpty(pdtlist)}"
-					  th:each="pdtlist : ${pdtlist}" th:value="${pdtlist.pdtSeq}" th:text= "${pdtlist.pdtName}" ></option> -->
+				      	id="pdtSeq" name="pdtSeq" onchange="fnPdtSeqChange();">
+				      	<option value="">발주제품 선택하세요</option>
 				      </select>                    
                       <span id="pdtSeqValid" name="pdtSeqValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
-                      	발주제품을 선택하세요
+                      	발주제품 선택하세요
                       </span>                    
                     </label>
                   </div>   
@@ -68,9 +61,8 @@
                     <input type="text" style="display: none;"/>                  
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">발주수량</span>
-                      <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
-                          id="motCount" name="motCount"
-                          >                    
+                      <input class="textRight block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                          id="motCount" name="motCount">                    
                       <span id="motCountValid" name="motCountValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
                       	발주수량을 입력하세요
                       </span>                    
@@ -81,7 +73,7 @@
                     <input type="text" style="display: none;"/>                  
                     <label class="block text-sm">
                       <span class="text-gray-700 dark:text-gray-400">발주금액</span>
-                      <input class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                      <input class="textRight block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
                           id="motAmts" name="motAmts"
                           onkeydown="fnOnKeyDown()" onchange="fnOnChange(this)" readonly>  
                           <input type="hidden" id="motAmt" name="motAmt">                  
@@ -97,31 +89,18 @@
               <div class="flex flex-col md:flex-row mt-4">
                 <!-- 이전 -->
                 <div class="md:h-auto sm:mt-auto md:w-1/2">
-                <a th:href="@{/myorderList}">
-                  <button
-                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
-                    aria-label="Search"
-                    type="button"
-                  >        
-                    
+                  <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple mr-3"
+                    aria-label="Search" type="button" onclick="fnGoBack();">        
 						<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 						  <path clip-rule="evenodd" fill-rule="evenodd" d="M7.793 2.232a.75.75 0 0 1-.025 1.06L3.622 7.25h10.003a5.375 5.375 0 0 1 0 10.75H10.75a.75.75 0 0 1 0-1.5h2.875a3.875 3.875 0 0 0 0-7.75H3.622l4.146 3.957a.75.75 0 0 1-1.036 1.085l-5.5-5.25a.75.75 0 0 1 0-1.085l5.5-5.25a.75.75 0 0 1 1.06.025Z"></path>
 						</svg>	
-					
                   </button> 
-                 </a>
                 </div>  
-                
                               
                 <!-- 저장버튼 -->
                 <div class="flex md:h-auto sm:mt-auto md:w-1/2 sm:justify-end">
-                  <button   
-                    id="btnSubmit"
-                    name="btnSubmit"             
-                    class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
-                    aria-label="Edit"
-                    type="button"
-                  >
+                  <button class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-white transition-colors duration-150 bg-purple-600 border border-transparent rounded-lg active:bg-purple-600 hover:bg-purple-700 focus:outline-none focus:shadow-outline-purple"
+                    id="btnSubmit" name="btnSubmit" aria-label="Edit" type="button">
 					<svg class="w-5 h-5" data-slot="icon" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 					  <path clip-rule="evenodd" fill-rule="evenodd" d="M10 1c3.866 0 7 1.79 7 4s-3.134 4-7 4-7-1.79-7-4 3.134-4 7-4Zm5.694 8.13c.464-.264.91-.583 1.306-.952V10c0 2.21-3.134 4-7 4s-7-1.79-7-4V8.178c.396.37.842.688 1.306.953C5.838 10.006 7.854 10.5 10 10.5s4.162-.494 5.694-1.37ZM3 13.179V15c0 2.21 3.134 4 7 4s7-1.79 7-4v-1.822c-.396.37-.842.688-1.306.953-1.532.875-3.548 1.369-5.694 1.369s-4.162-.494-5.694-1.37A7.009 7.009 0 0 1 3 13.179Z"></path>
 					</svg> 
@@ -134,19 +113,25 @@
       </div>
     </div>
     
-   
-    
     <script type="text/javascript">
 // ============================================================================
 // 변수선언
 // ============================================================================
-		let form			= document.querySelector("form[name=form]");
-		let cdgSeq			= document.querySelector("cdgSeq");
-	
-		// 그룹코드명
-		let cdgName         = document.querySelector("input[name=cdgName]");
-		let cdgNameValid    = document.querySelector("span[name=cdgNameValid]");
+		let form = document.querySelector("form[name=form]");
+		
+		// 발주사
+		let motCompCd      = document.querySelector("select[name=motCompCd]");
+		let motCompCdValid = document.querySelector("span[name=motCompCdValid]");
 
+		// 발주제품
+		let pdtSeq   	   = document.querySelector("select[name=pdtSeq]");
+		let pdtSeqValid	   = document.querySelector("span[name=pdtSeqValid]");
+
+		// 발주수량
+		let motCounts       = document.querySelector("input[name=motCount]");
+		let motCountsValid  = document.querySelector("span[name=motCountValid]");
+				
+		// 컨트롤러 변수
 		let goUrlSdmList   	= "/";		/* 조회화면 */
 		let goUrlSdmForm   	= "/";		/* 수정화면 */
 		let goUrlSdmCreate 	= "/";	/* 등록화면 */
@@ -156,25 +141,22 @@
 		let goUrlSdmUdtOne 	= "/codeGroupSdmDelNy";		/* 삭제여부변경 */
 
 		// 필수입력체크대상
-		// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수)
+		// validType : 1(한글), 2(영문), 3(숫자:정수), 4(숫자:실수), 5(숫자콤마)
 		//             10(한글영문), 11(한글숫자), 12(영문숫자), 13(한글영문숫자)
 		//			   20(비밀번호), 21(날짜), 22(이메일)
 		//             30(특수문자), 31(공백체크)
-		// TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;
+		// TYPE_KR   =  1, TYPE_EN   = 2,  TYPE_IT   = 3,  TYPE_FT     = 4;  TYPE_ICM = 5;
 		// TYPE_KREN = 10, TYPE_KRIT = 11, TYPE_ENIT = 12, TYPE_KRENIT = 13;
 		// TYPE_PW   = 20, TYPE_DT   = 21, TYPE_EM   = 22;
 		// TYPE_SP   = 30, TYPE_NULL = 31;
 		let dispText = "";
-		let typeArr = [3,3,3,30];		
-		let nameArr = ["motCompCd","pdtSeqValid","motCount","motAmts"];
-		let textArr = ["발주사 선택을 하세요","제품 선택을 하세요","발주사와 발주제품을 선택하고 입력하세요","가격을 확인하세요"];	
+		let typeArr = [TYPE_ICM,TYPE_ICM];		
+		let nameArr = ["motCount","motAmts"];
+		let textArr = [dispText,dispText];	
 		
 // ============================================================================
 // event
 // ============================================================================
-
-    	
-		
 		// event onkeydown
 		fnOnKeyDown = function() {
 			// 엔터키(13)이면
@@ -193,6 +175,11 @@
 				};
 			};	
 		};	
+		
+		// 이전 페이지 이동
+		function fnGoBack() {
+			location.href = "/myorderList";
+		}		
 
 // ============================================================================
 // function
@@ -200,7 +187,8 @@
 
 		// controller 호출
 		fnCallController = function() {
-			//if(!fnValidation()) {return false;};
+			if(!fnValidationForm()) {return false;};
+			if(!fnValidation()) {return false;};
 			
 			// 저장
 			form.action = goUrlSdmInsert;
@@ -209,66 +197,81 @@
 		
 		// 필수입력 확인
 	    fnValidationForm = function() {
-			let validChk = false;		
-			return validChk;
+			// 발주사
+			if(motCompCd.value == "") {
+				motCompCd.setAttribute("class","block w-full mt-1 text-sm dark:text-gray-300 border-red-600  dark:border-gray-600 dark:bg-gray-700 form-select focus:border-red-400 focus:outline-none focus:shadow-outline-red dark:focus:shadow-outline-gray");
+				motCompCdValid.setAttribute("style", "");
+				return false;
+			}
+			
+			// 발주제품
+			if(pdtSeq.value == "") {
+				pdtSeq.setAttribute("class","block w-full mt-1 text-sm dark:text-gray-300 border-red-600 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-red-400 focus:outline-none focus:shadow-outline-red dark:focus:shadow-outline-gray");
+				pdtSeqValid.setAttribute("style", "");
+				return false;
+			}
+				
+			// 수량
+			if((motCounts.value == null) || (motCounts.value == "") || (motCounts.value.length == 0)) {
+				motCountsValid.setAttribute("style", "");
+				return false;
+			} else {
+				return fnNullToEmpty(motCounts, motCountsValid, "");
+			};
 		};
 
     </script>
+    
      <script th:inline="javascript">
-    	/* document.getElementById("test").onclick = function(){
-    		var index =[[${pdtlist}]];
-    		console.log(index)
-    		alert(index[1].pdtName)
-    	} */
-    	
-    	let motCount = document.getElementById("motCount");
-		let motAmt = document.getElementById("motAmts");
+    	let motCount    = document.getElementById("motCount");
+		let motAmt      = document.getElementById("motAmts");
 		let hiddenprice = document.getElementById("motAmt");
+		
     	//발주사 선택
     	document.getElementById("motCompCd").onchange = function(){
     		let index =[[${pdtlist}]];
     		let aa= $("#motCompCd").val();
-    		/* console.log(index)
-    		alert(aa); */
-    			//alert(aa)
-    			let anotherSelectBox = document.getElementById("pdtSeq");
     		
-                anotherSelectBox.innerHTML = '';
+    		let anotherSelectBox = document.getElementById("pdtSeq");
+    		
+            anotherSelectBox.innerHTML = '';
                 
-                
-                
-                motAmt.value=null
-                hiddenprice.value = null;
-                
-	                for (let i = 0; i < index.length; i++) {
-	                	if(index[i].mbrSeq  ==  aa){
-	                		var option = document.createElement("option");
-	                		//alert()
-		                    option.text = index[i].pdtName; 
-		                    option.value = index[i].pdtSeq; 
-		                    option.dataset.price = index[i].pdtPrice;
-		                    anotherSelectBox.add(option);
-	                		
-	                	}
-	                } 
-    	}
-    	document.getElementById("pdtSeq").onchange = function() {
-    		motCount.value = null;
-            motAmt.value=null
+            motAmt.value      = null
             hiddenprice.value = null;
+            
+            for (let i = 0; i < index.length; i++) {
+            	if(index[i].mbrSeq  ==  aa){
+            		var option = document.createElement("option");
+            		//alert()
+                    option.text = index[i].pdtName; 
+                    option.value = index[i].pdtSeq; 
+                    option.dataset.price = index[i].pdtPrice;
+                    anotherSelectBox.add(option);
+            	}
+            }
+            
+			motCompCd.setAttribute("class", "block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+			motCompCdValid.setAttribute("style", "visibility:hidden;");				
+    	}
+    	
+    	// 발주제품
+    	document.getElementById("pdtSeq").onchange = function() {
+    		motCount.value    = null;
+            motAmt.value      = null
+            hiddenprice.value = null;
+            
+            pdtSeq.setAttribute("class","block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray");
+			pdtSeqValid.setAttribute("style", "visibility:hidden;");
     	} 
+    	
     	// 수량 입력시 총합 가격 자동 입력
     	document.getElementById("motCount").onchange = function(){
-    		
-    		
     		let select = document.getElementById("pdtSeq")
     		let option = select.options[select.selectedIndex];
     		let price = option.dataset.price;
     		
     		let count = document.getElementById("motCount").value;
     		
-    		//alert(price);
-    		//alert(count)
     		let prises = price * count; // 총 합계
     		let hiddenprice = document.getElementById("motAmt"); // 실제 저장할 값
     		let totalprice = document.getElementById("motAmts");// 보여주는 값
@@ -276,34 +279,33 @@
     		totalprice.value = prises.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ","); //3자리 마다 콤마 찍기
     		hiddenprice.value = prises; 
     	} 
+    	
     	// 저장버튼
 		document.getElementById("btnSubmit").onclick = function() {
+			if(!fnValidationForm()) {return false;};
 			if(!fnValidation()) {return false;};
-			//fnCallController();
-			/* alert($("#motCompCd").val())
-			alert($("#pdtSeq").val())
-			alert($("#motCount").val())
-			alert($("#motAmt").val()) */
-			let urlpa =new URLSearchParams(window.location.search);
+
+			let urlpa  = new URLSearchParams(window.location.search);
 			let morSeq = urlpa.get('morSeq');
-			//alert(morSeq);
+			
 			$.ajax({
-				async: true 
+				async : true 
 				,cache: false
-				,type: "get"
-				,url: "/myorderDetailInst"
-				,data : {"motCompCd" : $("#motCompCd").val(), "pdtSeq": $("#pdtSeq").val(), "motCount":$("#motCount").val(), "motAmt":$("#motAmt").val(),
-					"morSeq" : morSeq}
+				,type : "get"
+				,url  : "/myorderDetailInst"
+				,data : {"motCompCd": $("#motCompCd").val()
+				        ,"pdtSeq"   : $("#pdtSeq"   ).val()
+				        ,"motCount" : $("#motCount" ).val() 
+				        ,"motAmt"   : $("#motAmt"   ).val()
+					    ,"morSeq"   : morSeq
+					    }
 				,success: function(response) {
 					if(response.rt == "success") {
-						
-						//alert("등록 성공 성공");
 						self.location.reload();
 					} 
 					else{
 						alert("실패")
 					}
-
 				}
 				,error : function(jqXHR, textStatus, errorThrown){
 					alert("ajaxUpdate " + jqXHR.textStatus + " : " + jqXHR.errorThrown);
@@ -311,8 +313,6 @@
 			}); 
 		};
     	
-    	
-		  
 	</script> 
       
   </body>
