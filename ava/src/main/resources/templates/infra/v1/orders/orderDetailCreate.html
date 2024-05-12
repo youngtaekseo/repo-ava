@@ -295,9 +295,16 @@
 			//if(!fnValidation()) {return false;};
 			if(!fnValidationForm()) {return false;};
 			
-			// 저장
-			form.action = goUrlSdmInsert;
-			form.submit();
+			// 주문수량이 주문가능수량을 초과하는지 확인
+			if(ortCount.value > ortOrderCount.value) {
+				ortCount.setAttribute("class","textRight block w-full mt-1 text-sm border-red-600 dark:text-gray-300 dark:bg-gray-700 focus:border-red-400 focus:outline-none focus:shadow-outline-red form-input");
+				ortCountValid.innerHTML = "주문가능수량을 초과 하였습니다"
+				ortCountValid.setAttribute("style", "");
+			} else {
+				// 저장
+				form.action = goUrlSdmInsert;
+				form.submit();
+			}
 		};	
 		
 		// 필수입력 확인
@@ -316,7 +323,7 @@
 				return false;
 			}
 				
-			// 수량
+			// 주문수량
 			if((ortCount.value == null) || (ortCount.value == "") || (ortCount.value.length == 0)) {
 				ortCountValid.setAttribute("style", "");
 				return false;

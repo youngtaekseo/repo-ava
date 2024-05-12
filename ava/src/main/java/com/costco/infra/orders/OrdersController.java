@@ -239,10 +239,9 @@ public class OrdersController {
 	public Map<String, Object> orderDetailListDelete(OrdersVo vo) throws Exception {
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		
-		if(service.orderDetailListDelete(vo)>0)
-		{
+		if(service.orderDetailListDelete(vo) > 0) {
 			returnMap.put("rt", "success");
-		}else {
+		} else {
 			returnMap.put("rt", "fail");
 		}
 

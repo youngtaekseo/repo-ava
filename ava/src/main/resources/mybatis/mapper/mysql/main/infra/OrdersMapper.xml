@@ -318,25 +318,21 @@
 	
 	<!-- 주문상세 체크된 리스트 삭제 -->
 	<delete id = "orderListDelete">
-		delete 
-			from
-				orders
-			where 1=1
-			AND ordSeq IN
-			<foreach collection="shCheckedArray" item="list" open="(" close=")" separator=",">
-	    	         #{list}
-	    	</foreach>
+		DELETE FROM orders
+		 WHERE 1=1
+		   AND ordSeq IN
+		   <foreach collection="shCheckedArray" item="list" open="(" close=")" separator=",">
+			 #{list}
+	       </foreach>
 	</delete>
 	
 	<!-- 체크된 리스트 자식요소 삭제 -->
 	<delete id = "orderDetailListDeletechile">
-		delete 
-			from
-				orderdetail
-			where 1=1
-			AND ordSeq IN
+		DELETE FROM orderdetail
+		 WHERE 1=1
+		   AND ordSeq IN
 			<foreach collection="shCheckedArray" item="list" open="(" close=")" separator=",">
-	    	         #{list}
+				#{list}
 	    	</foreach>
 	</delete>
 	
@@ -348,8 +344,6 @@
 		where
 			ordSeq = #{ordSeq}
 	</update>
-	
-	
 	
 	<!-- 주문 디테일 삭제 -->
 	<delete id= "orderdetaildelete">
