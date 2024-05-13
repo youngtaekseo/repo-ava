@@ -21,7 +21,7 @@ public class WarehousingDto {
 	private String  xwhsMorSeq;
 	private String  xRowNum;
 	private Integer xwhsCountTot;
-	private String  xwhsMotWarehousingNy;
+	private Integer xwhsMotWarehousingNy;
 	
 	private Integer xwhsSumWarehousing;  // 입고 총 수량
 	private Integer xwhsRestWarehousing; // 입고 후 발주 잔량
@@ -185,11 +185,11 @@ public class WarehousingDto {
 		this.xwhsRestWarehousing = xwhsRestWarehousing;
 	}
 
-	public String getXwhsMotWarehousingNy() {
+	public Integer getXwhsMotWarehousingNy() {
 		return xwhsMotWarehousingNy;
 	}
 
-	public void setXwhsMotWarehousingNy(String xwhsMotWarehousingNy) {
+	public void setXwhsMotWarehousingNy(Integer xwhsMotWarehousingNy) {
 		this.xwhsMotWarehousingNy = xwhsMotWarehousingNy;
 	}
 
