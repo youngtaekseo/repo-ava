@@ -11,7 +11,7 @@
 			 , a.*
 		  FROM (SELECT a.morSeq 
 					 , a.morDate 
-					 , a.morWarehousingNy 
+					 , fnMyOrderState(a.morSeq) morWarehousingNy 
 					 , a.morDelNy 
 					 , a.morRegDt 
 					 , a.morModDt 
@@ -152,7 +152,8 @@
 					 , c.pdtName 
 					 , a.motCount 
 					 , a.motAmt
-					 , ifnull(a.motWarehousingNy,0) motWarehousingNy 
+					 <!-- , ifnull(a.motWarehousingNy,0) motWarehousingNy --> 
+					 , fnMyOrderDetailState(a.motSeq) motWarehousingNy
 					 , a.motDelNy 
 					 , a.motRegDt 
 					 , a.motModDt
@@ -200,7 +201,8 @@
 			 , c.pdtSeq
 			 , a.motCount 
 			 , a.motAmt
-			 , ifnull(a.motWarehousingNy,0) motWarehousingNy 
+			 <!-- , ifnull(a.motWarehousingNy,0) motWarehousingNy --> 
+			 , fnMyOrderDetailState(a.motSeq) motWarehousingNy
 			 , a.motDelNy 
 			 , a.motRegDt 
 			 , a.motModDt
@@ -269,7 +271,7 @@
 			motCompCd = #{motCompCd}
 			,motCount = #{motCount}
 			,motAmt = #{motAmt}
-			,motWarehousingNy = #{motWarehousingNy}
+			<!-- ,motWarehousingNy = #{motWarehousingNy} -->
 			,pdtSeq = #{pdtSeq}
 		where 
 			motSeq = #{motSeq}

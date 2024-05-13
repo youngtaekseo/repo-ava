@@ -79,7 +79,8 @@ public class WarehousingController {
 		service.insert(dto);
 		
 		// 입고상태 변경
-		upDateMotWarehousing(dto);
+		//upDateMotWarehousing(dto);
+		
 		return "redirect:/warehousingList";
 	}
 	
@@ -97,7 +98,7 @@ public class WarehousingController {
 		service.update(dto);
 		
 		// 입고상태 변경
-		upDateMotWarehousing(dto);
+		//upDateMotWarehousing(dto);
 		
 		return "redirect:/warehousingList";
 	}
@@ -146,15 +147,6 @@ public class WarehousingController {
 		} else if(dto.getXwhsWshSum() == 0) {
 			dto.setXwhsMotWarehousingNy("0"); // 미입고
 		}
-		/*
-		if(dto.getXwhsWarehousing_2() > 0) {
-			dto.setXwhsMotWarehousingNy("2"); // 부분입고
-		} else if(dto.getXwhsWarehousing_2() == 0 && dto.getXwhsWarehousing_1() == 0) {
-			dto.setXwhsMotWarehousingNy("0"); // 미입고
-		} else if(dto.getXwhsWarehousing_2() == 0 && dto.getXwhsWarehousing_0() == 0 && dto.getXwhsWarehousing_1() > 0) {
-			dto.setXwhsMotWarehousingNy("1"); // 입고완료
-		};
-		*/
 		
 		// 발주 입고상태 변경
 		service.updateMorWarehousingNy(dto);
@@ -168,7 +160,7 @@ public class WarehousingController {
 		service.delete(dto);
 		
 		// 입고상태 변경
-		upDateMotWarehousing(dto);
+		//upDateMotWarehousing(dto);
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("rt", "success");
@@ -183,7 +175,7 @@ public class WarehousingController {
 		service.deleteList(vo);
 		
 		// 입고상태 변경
-		upDateMotWarehousing(dto);
+		//upDateMotWarehousing(dto);
 		
 		Map<String, Object> returnMap = new HashMap<String, Object>();
 		returnMap.put("rt", "success");
