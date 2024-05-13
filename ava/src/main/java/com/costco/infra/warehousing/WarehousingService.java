@@ -39,6 +39,11 @@ public class WarehousingService {
 	public int delete(WarehousingDto dto) {
 		return dao.delete(dto);
 	};
+	
+	// 다중삭제
+	public int deleteList(WarehousingVo vo) {
+		return dao.deleteList(vo);
+	};
 
 	// 입고상태
 	public WarehousingDto selectOneMotWarehousingNy(WarehousingDto dto) {

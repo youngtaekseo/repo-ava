@@ -30,6 +30,9 @@ public class WarehousingDto {
 	private Integer xwhsWarehousing_1; // 입고완료
 	private Integer xwhsWarehousing_2; // 부분입고
 	
+	private Integer xwhsMotSum; // 발주수량
+	private Integer xwhsWshSum; // 입고수량
+	
 	public String getWhsSeq() {
 		return whsSeq;
 	}
@@ -212,6 +215,22 @@ public class WarehousingDto {
 
 	public void setXwhsWarehousing_2(Integer xwhsWarehousing_2) {
 		this.xwhsWarehousing_2 = xwhsWarehousing_2;
+	}
+
+	public Integer getXwhsMotSum() {
+		return xwhsMotSum;
+	}
+
+	public void setXwhsMotSum(Integer xwhsMotSum) {
+		this.xwhsMotSum = xwhsMotSum;
+	}
+
+	public Integer getXwhsWshSum() {
+		return xwhsWshSum;
+	}
+
+	public void setXwhsWshSum(Integer xwhsWshSum) {
+		this.xwhsWshSum = xwhsWshSum;
 	}
 	 
 }

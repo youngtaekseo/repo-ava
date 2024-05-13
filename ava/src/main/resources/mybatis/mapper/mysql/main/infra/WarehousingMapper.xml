@@ -186,12 +186,12 @@
     
     <!-- 발주 입고상태 -->
     <select id="selectOneMorWarehousingNy" resultMap="resultMapObj">
-    	SELECT (SELECT COUNT(*) FROM myorderdetail aa WHERE aa.morSeq = a.morSeq AND aa.motWarehousingNy = 0) xwhsWarehousing_0
-    	     , (SELECT COUNT(*) FROM myorderdetail bb WHERE bb.morSeq = a.morSeq AND bb.motWarehousingNy = 1) xwhsWarehousing_1
-    	     , (SELECT COUNT(*) FROM myorderdetail cc WHERE cc.morSeq = a.morSeq AND cc.motWarehousingNy = 2) xwhsWarehousing_2
-  		  FROM myorder a
- 		 WHERE 1 = 1
- 		   AND a.morSeq = #{xwhsMorSeq}
+		 SELECT max(a.motCount)           xwhsMotSum
+		      , ifnull(sum(b.whsCount),0) xwhsWdhSum
+   		   FROM myorderdetail a
+				LEFT JOIN warehousing b
+          		  ON b.motSeq = a.motSeq
+		  WHERE a.motSeq = #{xwhsMotSeq}
     </select>
     
     <!-- 발주 입고상태 변경 -->

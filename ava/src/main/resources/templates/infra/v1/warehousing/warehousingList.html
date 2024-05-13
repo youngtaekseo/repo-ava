@@ -343,6 +343,7 @@
 		let goUrlSdmInsert 	= "/warehousingInsert";		/* 등록 */
 		let goUrlSdmUpdate 	= "/warehousingUpdate";		/* 수정 */
 		let goUrlSdmDelete 	= "/warehousingDelete";		/* 삭제 */
+		let goUrlSdmDeleteList = "/warehousingDeleteList";		/* 다중삭제 */
 		let goUrlSdmUdtDelNy= "/warehousingUdtDelNy";	/* 삭제여부변경 */
 		let goUrlSdmPaging  = "/warehousingPaging";		/* 페이징처리 */
 		let goUrlSdmInit    = "/warehousingListInit";	/* 검색조건 초기화 */
@@ -475,7 +476,7 @@
 					, cache: false
 					, tpye: "post"
 					, data: {"shCheckedArray":$("#shCheckedArray").val()}
-					, url: "/codeGroupSdmListDelete"
+					, url: goUrlSdmDeleteList
 					, success: function(response) {
 						if(response.rt == "success") {
 							// Controller 호출

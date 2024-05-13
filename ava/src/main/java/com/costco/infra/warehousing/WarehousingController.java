@@ -139,6 +139,14 @@ public class WarehousingController {
 		dto.setXwhsMotSeq(xwhsMotSeq);
 		
 		// 발주 입고상태 설정
+		if(dto.getXwhsMotSum() == dto.getXwhsWshSum()) {
+			dto.setXwhsMotWarehousingNy("1"); // 입고완료
+		} else if(dto.getXwhsMotSum() > dto.getXwhsWshSum() && dto.getXwhsWshSum() != 0) {
+			dto.setXwhsMotWarehousingNy("2"); // 부분입고
+		} else if(dto.getXwhsWshSum() == 0) {
+			dto.setXwhsMotWarehousingNy("0"); // 미입고
+		}
+		/*
 		if(dto.getXwhsWarehousing_2() > 0) {
 			dto.setXwhsMotWarehousingNy("2"); // 부분입고
 		} else if(dto.getXwhsWarehousing_2() == 0 && dto.getXwhsWarehousing_1() == 0) {
@@ -146,6 +154,7 @@ public class WarehousingController {
 		} else if(dto.getXwhsWarehousing_2() == 0 && dto.getXwhsWarehousing_0() == 0 && dto.getXwhsWarehousing_1() > 0) {
 			dto.setXwhsMotWarehousingNy("1"); // 입고완료
 		};
+		*/
 		
 		// 발주 입고상태 변경
 		service.updateMorWarehousingNy(dto);
@@ -157,6 +166,21 @@ public class WarehousingController {
 	public Map<String, Object> warehousingDelete(WarehousingDto dto) throws Exception {
 		// 삭제
 		service.delete(dto);
+		
+		// 입고상태 변경
+		upDateMotWarehousing(dto);
+		
+		Map<String, Object> returnMap = new HashMap<String, Object>();
+		returnMap.put("rt", "success");
+		return returnMap;
+	}
+	
+	// 다중삭제
+	@ResponseBody
+	@RequestMapping(value = "/warehousingDeleteList")
+	public Map<String, Object> warehousingDeleteList(WarehousingVo vo, WarehousingDto dto) throws Exception {
+		// 삭제
+		service.deleteList(vo);
 		
 		// 입고상태 변경
 		upDateMotWarehousing(dto);

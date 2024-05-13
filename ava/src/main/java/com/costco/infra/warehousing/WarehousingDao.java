@@ -15,6 +15,8 @@ public interface WarehousingDao {
 	public int update(WarehousingDto dto);
 	// 삭제
 	public int delete(WarehousingDto dto);
+	// 다중삭제
+	public int deleteList(WarehousingVo vo);
 	// 입고 입고상태
 	public WarehousingDto selectOneMotWarehousingNy(WarehousingDto dto);
 	// 발주상세 입고상태 변경
