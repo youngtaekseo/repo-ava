@@ -42,11 +42,14 @@
 			        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 			        			<span class="text-gray-700 dark:text-gray-400">주문고객사</span>
 			            		<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-									id="ortCompCd" name="ortCompCd" readonly>
+									id="ortCompCd" name="ortCompCd" onchange="fnOrtCompCdChange();">
 									<option value="">고객사를 선택하세요</option>
 									<option th:if="${!#lists.isEmpty(list)}"
 									th:each="list : ${list}" th:value="${list.mbrSeq}" th:text= "${list.mbrClientName}" th:selected="${item.ortCompCd} == ${list.mbrSeq}"></option>
-								</select>		            			
+								</select>
+								<span id="ortCompCdValid" name="ortCompCdValid" class="text-xs text-red-600 dark:text-red-400" style="visibility:hidden;">
+									고객사를 선택하세요
+								</span>			            			
 			      			</label>
 			    		</div>
 			    		
@@ -101,7 +104,7 @@
 			        			<span class="text-xs text-red-600 dark:text-red-400"><b>*</b></span>
 			        			<span class="text-gray-700 dark:text-gray-400">배송사</span>
 			        			<select class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-select focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
-									id="ortShippingCd" name="ortShippingCd" onchange="fhShippingChange();">
+									id="ortShippingCd" name="ortShippingCd" onchange="fnShippingChange();">
 									<option value="">배송사를 선택하세요</option>
 									<option th:if="${!#lists.isEmpty(courierList)}"
 										th:each="courierList : ${courierList}" th:value="${courierList.mbrSeq}" th:text= "${courierList.mbrClientName}" th:selected="${item.ortShippingCd} == ${courierList.mbrSeq}"></option>
@@ -169,6 +172,9 @@
 // ============================================================================
 		let form = document.querySelector("form[name=form]");
 		
+		let ortCompCd          = document.querySelector("#ortCompCd");
+		let ortCompCdValid     = document.querySelector("#ortCompCdValid");
+		
 		let ortShippingCd      = document.querySelector("#ortShippingCd");
 		let ortShippingCdValid = document.querySelector("#ortShippingCdValid");
 
@@ -231,10 +237,16 @@
 			};	
 		};	
 		
-		// 배송사선택
-		function fhShippingChange() {
+		// 주문고객사
+		function fnOrtCompCdChange() {
 			ortShippingCd.setAttribute("class", "block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
 			ortShippingCdValid.setAttribute("style", "visibility:hidden;");				
+		}
+				
+		// 배송사선택
+		function fnShippingChange() {
+			ortCompCd.setAttribute("class", "block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input");
+			ortCompCdValid.setAttribute("style", "visibility:hidden;");				
 		}			
 		
 		// 이전 페이지 이동
@@ -258,6 +270,13 @@
 		
 		// 필수입력 확인
 	    function fnValidationForm() {
+			// 주문고객사
+			if(ortCompCd.value == "") {
+				ortCompCd.setAttribute("class","block w-full mt-1 text-sm dark:text-gray-300 border-red-600  dark:border-gray-600 dark:bg-gray-700 form-select focus:border-red-400 focus:outline-none focus:shadow-outline-red dark:focus:shadow-outline-gray");
+				ortCompCdValid.setAttribute("style", "");
+				return false;
+			}
+						
 			// 배송사
 			if(ortShippingCd.value == "") {
 				ortShippingCd.setAttribute("class","block w-full mt-1 text-sm dark:text-gray-300 border-red-600  dark:border-gray-600 dark:bg-gray-700 form-select focus:border-red-400 focus:outline-none focus:shadow-outline-red dark:focus:shadow-outline-gray");
