@@ -165,7 +165,8 @@ public class OrdersController {
 	public String updateOrt(OrdersDto dto, OrdersDto isDto) throws Exception {
 		service.updateOrt(dto);
 		
-		// 출고상태 변경		
+		// 출고상태 변경
+		/*
 		isDto = service.selectOneOrtReleaseNy(dto);
 		
 		// 주문, 주문상세 출고상태 설정
@@ -181,6 +182,7 @@ public class OrdersController {
 			// 주문상세 출고상태 변경
 			service.updateOrdReleasedNy(dto);			
 		}
+		*/
 		
 		return "redirect:/orderDetailList";
 	}

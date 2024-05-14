@@ -115,11 +115,11 @@ public class WarehousingController {
 		
 		// 발주상세 입고상태 설정
 		if(dto.getXwhsSumWarehousing() == 0) {
-			dto.setXwhsMotWarehousingNy("0"); // 미입고
+			dto.setXwhsMotWarehousingNy(0); // 미입고
 		} else if(dto.getXwhsSumWarehousing() >= 0 && dto.getXwhsRestWarehousing() == 0) {
-			dto.setXwhsMotWarehousingNy("1"); // 입고완료
+			dto.setXwhsMotWarehousingNy(1); // 입고완료
 		} else if(dto.getXwhsSumWarehousing() >= 0 && dto.getXwhsRestWarehousing() != 0) {
-			dto.setXwhsMotWarehousingNy("2"); // 부분입고
+			dto.setXwhsMotWarehousingNy(2); // 부분입고
 		};
 		
 		// 발주상세 입고상태 변경
@@ -141,11 +141,11 @@ public class WarehousingController {
 		
 		// 발주 입고상태 설정
 		if(dto.getXwhsMotSum() == dto.getXwhsWshSum()) {
-			dto.setXwhsMotWarehousingNy("1"); // 입고완료
+			dto.setXwhsMotWarehousingNy(1); // 입고완료
 		} else if(dto.getXwhsMotSum() > dto.getXwhsWshSum() && dto.getXwhsWshSum() != 0) {
-			dto.setXwhsMotWarehousingNy("2"); // 부분입고
+			dto.setXwhsMotWarehousingNy(2); // 부분입고
 		} else if(dto.getXwhsWshSum() == 0) {
-			dto.setXwhsMotWarehousingNy("0"); // 미입고
+			dto.setXwhsMotWarehousingNy(0); // 미입고
 		}
 		
 		// 발주 입고상태 변경

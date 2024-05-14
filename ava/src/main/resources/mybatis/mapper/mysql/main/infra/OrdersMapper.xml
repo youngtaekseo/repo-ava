@@ -65,7 +65,7 @@
 					 , a.ortCount
 					 , a.ortAmt
 					 , a.ortReleaseDt 
-					 , a.ortReleaseNy
+					 , fnOrderDetailState(a.ortSeq) ortReleaseNy
 					 , a.ortRegDt
 					 , a.ortModDt
 					 , b.ordSeq
@@ -132,7 +132,7 @@
         	,ortAmt
         	,ortShippingCd
         	,ortReleaseDt
-        	,ortReleaseNy
+        	,fnOrderDetailState(ortSeq) ortReleaseNy
         	,ortDelNy
         	,ortRegDt
         	,ortModDt
@@ -152,7 +152,7 @@
 					 , a.ordDelNy
 					 , a.ordRegDt
 					 , a.ordModDt
-					 , a.ordReleasedNy
+					 , fnOrderState(a.ordSeq) ordReleasedNy
 					 , a.mbrSeq
 					 , (SELECT IFNULL(SUM(aa.ortCount),0) 
 					      FROM orderdetail aa
