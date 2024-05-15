@@ -11,18 +11,18 @@
           							id="checkboxAll" name="checkboxAll" type="checkbox"
           							style="height: 15px; width: 15px">
       						</th>
-      						<th class="px-1 py-1" style="text-align: right;">#</th>
-      						<th class="px-2 py-1" style="text-align: right;">주문</th>
+      						<th class="px-1 py-1 textRight">#</th>
+      						<th class="px-2 py-1 textRight">주문</th>
       						<th class="px-2 py-1">주문일자</th>
       						<!--<th class="px-2 py-1">담당자</th>-->
-      						<th class="px-2 py-1" style="text-align: right;">주문수량</th>
-      						<th class="px-2 py-1" style="text-align: right;">주문금액</th>
-      						<th class="px-2 py-1" style="text-align: right;">출고수량</th>
-      						<th class="px-2 py-1" style="text-align: right;">잔여수량</th>
-      						<th class="px-2 py-1" style="text-align: center;">출고여부</th>
+      						<th class="px-2 py-1 textRight">주문수량</th>
+      						<th class="px-2 py-1 textRight">주문금액</th>
+      						<th class="px-2 py-1 textRight">출고수량</th>
+      						<th class="px-2 py-1 textRight">잔여수량</th>
+      						<th class="px-2 py-1 textCenter">출고여부</th>
       						<th class="px-2 py-1">등록일시</th>
       						<th class="px-2 py-1">수정일시</th>
-      						<th class="px-2 py-1" style="text-align: center;">삭제여부</th>
+      						<th class="px-2 py-1 textCenter">삭제여부</th>
       						<th class="px-2 py-1">작업</th>
     					</tr>
   					</thead>
@@ -46,23 +46,23 @@
 	                        		th:checked="false" />
 	                    	</td>
 	                    	<!--row순번-->
-	                    	<td id="xRowNum" name="xRowNum" class="px-1 py-1" th:text="${list.xRowNum}" style="text-align: right;"></td>
+	                    	<td id="xRowNum" name="xRowNum" class="px-1 py-1 textRight" th:text="${list.xRowNum}"></td>
 	                    	<!--주문순번-->
-	                    	<td id="ordSeq" name="ordSeq" class="px-2 py-1" th:text="${list.ordSeq}" style="text-align: right;"></td>
+	                    	<td id="ordSeq" name="ordSeq" class="px-2 py-1 textRight" th:text="${list.ordSeq}"></td>
 	                    	<!--주문일자-->
    							<td class="px-2 py-1" th:text="${#dates.format(list.ordDate, 'yyyy-MM-dd')}" ></td>
 	                    	<!--담당자-->
 							<!--<td id="mbrSeq" name="mbrSeq" class="px-2 py-1" th:text="${@membersService.selectOneMembersName(list.mbrSeq)}" ></td>-->
 							<!--주문수량-->
-							<td class="px-2 py-1" th:text="${#numbers.formatInteger(list.xortCount, 1,  'COMMA')}"  style="text-align: right;"></td>
+							<td class="px-2 py-1 textRight" th:text="${#numbers.formatInteger(list.xortCount, 1,  'COMMA')}"></td>
 							<!--주문금액-->
-							<td class="px-2 py-1" th:text="${#numbers.formatInteger(list.xortAmt, 1,  'COMMA')}"  style="text-align: right;"></td>
+							<td class="px-2 py-1 textRight" th:text="${#numbers.formatInteger(list.xortAmt, 1,  'COMMA')}"></td>
 							<!--출고수량-->
-							<td class="px-2 py-1" th:text="${#numbers.formatInteger(list.xortCount_1, 1,  'COMMA')}"  style="text-align: right;"></td>
+							<td class="px-2 py-1 textRight" th:text="${#numbers.formatInteger(list.xortCount_1, 1,  'COMMA')}"></td>
 							<!--잔여수량-->
-							<td class="px-2 py-1" th:text="${#numbers.formatInteger(list.xortCount_0, 1,  'COMMA')}"  style="text-align: right;"></td>
+							<td class="px-2 py-1 textRight" th:text="${#numbers.formatInteger(list.xortCount_0, 1,  'COMMA')}"></td>
 							<!--출고여부-->
-	                    	<td class="px-2 py-1" style="text-align: center;">
+	                    	<td class="px-2 py-1 textCenter">
 								<th:block th:if="${list.xortCount != 0}">
 		                        	<th:block th:switch="${list.ordReleasedNy}">
 		                        		<span th:case = "0"
@@ -90,7 +90,7 @@
 	                        <!--수정일시-->
 	                        <td class="px-2 py-1" th:text="${#dates.format(list.ordModDt, 'yyyy-MM-dd HH:mm:ss')}"></td>
 							<!--삭제여부-->
-	                        <td class="px-2 py-1" style="text-align: center;">
+	                        <td class="px-2 py-1 textCenter">
 	                        	<th:block th:switch="${list.ordDelNy}">
 	                        		<span th:case = "0"
 	                        			class="px-2 py-1 font-semibold leading-tight text-green-700 bg-green-100 rounded-full dark:bg-green-700 dark:text-green-100">
